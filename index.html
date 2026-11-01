@@ -550,10 +550,76 @@ function filterDistricts() {
 function openDistrict(district) {
   document.getElementById("districtTitle").textContent =
     district.emoji + " " + district.name;
-
-  document.getElementById("districtIntro").textContent =
+document.getElementById("districtIntro").textContent =
     district.name + " जिले के पर्यटन स्थलों की जानकारी:";
 
-  c
+  const placesBox = document.getElementById("places");
+  placesBox.innerHTML = "";
 
-  
+  district.places.forEach((place, index) => {
+    const row = document.createElement("div");
+    row.className = "place";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "place-button";
+    button.textContent = (index + 1) + ". " + place.name;
+    button.setAttribute("aria-expanded", "false");
+
+    const info = document.createElement("div");
+    info.className = "place-info hidden";
+
+    function addInfo(label, value) {
+      const p = document.createElement("p");
+      p.style.margin = "4px 0";
+
+      const strong = document.createElement("strong");
+      strong.textContent = label + ": ";
+
+      const span = document.createElement("span");
+      span.textContent = value || "जानकारी जल्द जोड़ी जाएगी";
+
+      p.append(strong, span);
+      info.appendChild(p);
+    }
+
+    addInfo("स्थान", place.location);
+    addInfo("प्रकार", place.category);
+    addInfo("घूमने का सही समय", place.bestMonth);
+    addInfo("खास आयोजन", place.specialEvent);
+    addInfo("कहानी और खास महत्व", place.story);
+
+    button.addEventListener("click", () => {
+      const isOpening = info.classList.contains("hidden");
+      info.classList.toggle("hidden");
+      button.setAttribute("aria-expanded", String(isOpening));
+    });
+
+    row.append(button, info);
+    placesBox.appendChild(row);
+  });
+
+  document.getElementById("details").classList.remove("hidden");
+  document.getElementById("details").scrollIntoView({ behavior: "smooth" });
+}
+
+function closeDetails() {
+  document.getElementById("details").classList.add("hidden");
+  document.getElementById("districts").scrollIntoView({ behavior: "smooth" });
+}
+
+function go(id) {
+  const section = document.getElementById(id);
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+// जिला सूची पहली बार दिखाना।
+renderDistricts(districts);
+
+// सर्च बॉक्स पर टाइप करते ही जिले फिल्टर करना।
+document.getElementById("search").addEventListener("input", filterDistricts);
+</script>
+</body>
+</html>
