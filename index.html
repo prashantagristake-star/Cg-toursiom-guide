@@ -294,6 +294,7 @@ footer p { font-size: 14px; }
   <option value="ऐतिहासिक">🏛️ ऐतिहासिक स्थल</option>
   <option value="वन्यजीव">🐘 वन्यजीव स्थल</option>
   <option value="संस्कृति">🎭 कला और संस्कृति</option>
+  <option value="अन्य">📍 अन्य पर्यटन स्थल</option>
 </select>
 
 <div id="places"></div>
@@ -389,109 +390,67 @@ const rawDistricts = [
   ["Surguja","सरगुजा","⛰️",["मैनपाट","रामगढ़ की पहाड़ियाँ एवं गुफाएँ","ठिनठिनी पत्थर"]]
 ];
 
-// जिन जगहों की विशेष जानकारी उपलब्ध है, उसे यहाँ रखा गया है।
+   
+// ==========================================
+// पर्यटन स्थलों की विशेष जानकारी
+// ==========================================
+
 const customDetailsMap = {
+
   "सियादेवी मंदिर एवं जलप्रपात": {
-    bestMonth: "जुलाई से फरवरी",
-    specialEvent: "महाशिवरात्रि पर मेला",
+    category: "प्राकृतिक",
+    whyVisit: "झरने, हरियाली और मंदिर के दर्शन के लिए।",
+    bestMonth: "जुलाई से फरवरी; बारिश के बाद हरियाली और पानी देखने को मिलता है।",
+    specialEvent: "महाशिवरात्रि पर मेला।",
     story: "प्राकृतिक हरियाली और झरने के साथ माता सियादेवी का पवित्र मंदिर।"
   },
+
   "तांदुला जलाशय": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "स्थानीय पर्यटन गतिविधियाँ",
-    story: "तांदुला नदी पर बना विशाल जलाशय।"
+    category: "प्राकृतिक",
+    whyVisit: "जलाशय, खुले प्राकृतिक वातावरण और आसपास के सुंदर दृश्यों का आनंद लेने के लिए।",
+    bestMonth: "अक्टूबर से मार्च; मौसम अपेक्षाकृत सुहावना रहता है।",
+    specialEvent: "स्थानीय पर्यटन गतिविधियाँ।",
+    story: "तांदुला नदी पर बना प्रसिद्ध जलाशय।"
   },
+
   "बारनवापारा वन्यजीव अभयारण्य": {
-    bestMonth: "नवंबर से अप्रैल",
-    specialEvent: "वन्यजीव सप्ताह के दौरान जागरूकता गतिविधियाँ",
-    story: "घने जंगलों और वन्यजीवों का प्राकृतिक रहवास।"
+    category: "वन्यजीव",
+    whyVisit: "जंगल, वन्यजीव और प्राकृतिक वातावरण देखने के लिए।",
+    bestMonth: "नवंबर से अप्रैल; वन्यजीव पर्यटन के लिए मौसम सामान्यतः अनुकूल रहता है।",
+    specialEvent: "वन्यजीव जागरूकता गतिविधियाँ।",
+    story: "घने जंगलों और विविध वन्यजीवों के प्राकृतिक आवास के लिए प्रसिद्ध।"
   },
+
   "गिरौदपुरी धाम": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "फाल्गुनी मेला",
-    story: "बाबा गुरु घासीदास जी की जन्मस्थली और जैतखाम के लिए प्रसिद्ध तीर्थ।"
+    category: "धार्मिक",
+    whyVisit: "बाबा गुरु घासीदास जी की जन्मस्थली और जैतखाम के दर्शन के लिए।",
+    bestMonth: "अक्टूबर से मार्च; मौसम अपेक्षाकृत अच्छा रहता है।",
+    specialEvent: "फाल्गुनी मेला।",
+    story: "सतनाम पंथ के प्रवर्तक बाबा गुरु घासीदास जी की जन्मस्थली।"
   },
+
   "तातापानी गर्म जलस्रोत": {
-    bestMonth: "अक्टूबर से फरवरी",
-    specialEvent: "मकर संक्रांति के आसपास मेला",
+    category: "प्राकृतिक",
+    whyVisit: "प्राकृतिक गर्म जलस्रोत और आसपास के पर्यटन क्षेत्र को देखने के लिए।",
+    bestMonth: "अक्टूबर से फरवरी; ठंड के मौसम में घूमना सुविधाजनक रहता है।",
+    specialEvent: "मकर संक्रांति के आसपास मेला।",
     story: "प्राकृतिक रूप से निकलने वाले गर्म जल के लिए प्रसिद्ध स्थान।"
   },
-  "चित्रकोट जलप्रपात": {
-    bestMonth: "जुलाई से अक्टूबर",
-    specialEvent: "स्थानीय पर्यटन और सांस्कृतिक आयोजन",
-    story: "इंद्रावती नदी पर स्थित चौड़े जलप्रपात को उसके विशाल आकार के कारण 'भारत का नियाग्रा' भी कहा जाता है।"
-  },
-  "तीरथगढ़ जलप्रपात": {
-    bestMonth: "अगस्त से फरवरी",
-    specialEvent: "प्रकृति पर्यटन",
-    story: "सीढ़ियों जैसी चट्टानी बनावट पर गिरता सुंदर जलप्रपात।"
-  },
-  "कांगेर घाटी राष्ट्रीय उद्यान": {
-    bestMonth: "नवंबर से मार्च",
-    specialEvent: "प्रकृति एवं वन्यजीव जागरूकता गतिविधियाँ",
-    story: "कुटुमसर गुफाओं और जैव विविधता के लिए प्रसिद्ध राष्ट्रीय उद्यान।"
-  },
-  "बस्तर की जनजातीय संस्कृति": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "बस्तर दशहरा",
-    story: "बस्तर की लोक परंपराओं, हस्तशिल्प, नृत्य और जनजातीय संस्कृति की विशेष पहचान।"
-  },
-  "शिवरीनारायण मंदिर": {
-    bestMonth: "जनवरी से मार्च",
-    specialEvent: "माघ पूर्णिमा मेला",
-    story: "महानदी, शिवनाथ और जोंक नदियों के संगम क्षेत्र के पास स्थित प्रसिद्ध धार्मिक स्थल, जिसका संबंध शबरी की लोककथा से भी जोड़ा जाता है।"
-  },
-  "प्राचीन बूढ़ा देव मंदिर, धमधा गढ़": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "स्थानीय पारंपरिक मड़ई मेला",
-    story: "धमधा क्षेत्र की स्थानीय आस्था और ऐतिहासिक पहचान से जुड़ा स्थल।"
-  },
-  "बूढ़ा देव मंदिर, मरोदा": {
-    bestMonth: "पूरे वर्ष; स्थानीय पर्वों के समय विशेष रौनक",
-    specialEvent: "स्थानीय पूजा और लोक पर्व",
-    story: "मरोदा क्षेत्र की लोक-आस्था और स्थानीय परंपराओं से जुड़ा मंदिर।"
-  },
-  "माँ पाताल भैरवी मंदिर (बर्फानी धाम)": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "शरद पूर्णिमा और महाशिवरात्रि के आयोजन",
-    story: "राजनांदगांव का प्रसिद्ध धार्मिक स्थल, अपनी विशिष्ट मंदिर संरचना और शिव-भक्ति से जुड़ी पहचान के लिए जाना जाता है।"
-  },
-  "माता कौशल्या मंदिर (चंद्रखुरी)": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "रामनवमी और नवरात्रि",
-    story: "चंद्रखुरी का माता कौशल्या मंदिर भगवान श्रीराम की माता कौशल्या से जुड़ी धार्मिक मान्यता के लिए प्रसिद्ध है।"
-  },
-  "भांडदेउ जैन मंदिर (आरंग)": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "जैन धार्मिक आयोजन",
-    story: "आरंग क्षेत्र की ऐतिहासिक जैन धरोहर और मंदिर स्थापत्य से जुड़ा स्थल।"
-  },
-  "नगपुरा पार्श्वनाथ जैन मंदिर": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "जैन धार्मिक पर्व और आयोजन",
-    story: "दुर्ग जिले के नगपुरा में स्थित प्रसिद्ध जैन तीर्थस्थल।"
-  },
-  "धमधा का किला (धमधा गढ़)": {
-    bestMonth: "अक्टूबर से फरवरी",
-    specialEvent: "स्थानीय सांस्कृतिक आयोजन",
-    story: "धमधा क्षेत्र के पुराने गढ़ और स्थानीय इतिहास से जुड़ा स्थल।"
-  },
-  "देवरानी-जेठानी मंदिर और रुद्र शिव (तालागांव)": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "महाशिवरात्रि के अवसर पर धार्मिक गतिविधियाँ",
-    story: "मनियारी नदी के पास स्थित प्राचीन मंदिर और प्रसिद्ध रुद्र शिव प्रतिमा के लिए तालागांव जाना जाता है।"
-  },
-  "पुरातात्विक नगरी मल्हार (मां डिडनेश्वरी मंदिर)": {
-    bestMonth: "अक्टूबर से मार्च",
-    specialEvent: "नवरात्रि के दौरान धार्मिक आयोजन",
-    story: "मल्हार अपने प्राचीन पुरातात्विक अवशेषों और मां डिडनेश्वरी मंदिर के लिए जाना जाता है।"
-  },
+
   "चित्रकोट जलप्रपात": {
     category: "प्राकृतिक",
     whyVisit: "विशाल जलप्रपात, प्राकृतिक सुंदरता और फोटोग्राफी का आनंद लेने के लिए।",
     bestMonth: "जुलाई से अक्टूबर; इस समय जलप्रपात में पानी अधिक रहता है।",
     specialEvent: "स्थानीय पर्यटन और सांस्कृतिक आयोजन।",
     story: "इंद्रावती नदी पर स्थित चित्रकोट जलप्रपात अपने घोड़े की नाल जैसे आकार और विशाल फैलाव के लिए प्रसिद्ध है।"
+  },
+
+  "तीरथगढ़ जलप्रपात": {
+    category: "प्राकृतिक",
+    whyVisit: "झरने, चट्टानों और जंगल के सुंदर प्राकृतिक दृश्यों के लिए।",
+    bestMonth: "अगस्त से फरवरी; बारिश के बाद जलप्रपात और आसपास की हरियाली आकर्षक रहती है।",
+    specialEvent: "प्रकृति पर्यटन।",
+    story: "सीढ़ियों जैसी चट्टानी बनावट पर गिरता सुंदर जलप्रपात।"
   },
 
   "कांगेर घाटी राष्ट्रीय उद्यान": {
@@ -501,33 +460,199 @@ const customDetailsMap = {
     specialEvent: "प्रकृति एवं वन्यजीव जागरूकता गतिविधियाँ।",
     story: "कुटुमसर गुफाओं और समृद्ध जैव विविधता के लिए प्रसिद्ध राष्ट्रीय उद्यान।"
   },
+
+  "बस्तर की जनजातीय संस्कृति": {
+    category: "संस्कृति",
+    whyVisit: "स्थानीय परंपराओं, लोकनृत्य, हस्तशिल्प और जनजातीय जीवन को समझने के लिए।",
+    bestMonth: "अक्टूबर से मार्च; इस दौरान कई सांस्कृतिक गतिविधियाँ होती हैं।",
+    specialEvent: "बस्तर दशहरा।",
+    story: "बस्तर की लोक परंपराओं, हस्तशिल्प, नृत्य और जनजातीय संस्कृति की विशेष पहचान।"
+  },
+
+  "शिवरीनारायण मंदिर": {
+    category: "धार्मिक",
+    whyVisit: "प्राचीन मंदिर, धार्मिक मान्यताओं और नदी संगम क्षेत्र को देखने के लिए।",
+    bestMonth: "अक्टूबर से मार्च; मौसम घूमने के लिए अच्छा रहता है।",
+    specialEvent: "माघ पूर्णिमा मेला।",
+    story: "महानदी, शिवनाथ और जोंक नदियों के संगम क्षेत्र के पास स्थित प्रसिद्ध धार्मिक स्थल, जिसका संबंध शबरी की लोककथा से भी जोड़ा जाता है।"
+  },
+
+  "प्राचीन बूढ़ा देव मंदिर, धमधा गढ़": {
+    category: "ऐतिहासिक",
+    whyVisit: "धमधा क्षेत्र की पुरानी धार्मिक और स्थानीय ऐतिहासिक पहचान जानने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "स्थानीय पारंपरिक मड़ई मेला।",
+    story: "धमधा क्षेत्र की स्थानीय आस्था और ऐतिहासिक पहचान से जुड़ा स्थल।"
+  },
+
+  "बूढ़ा देव मंदिर, मरोदा": {
+    category: "धार्मिक",
+    whyVisit: "स्थानीय लोक-आस्था और धार्मिक परंपराओं को जानने के लिए।",
+    bestMonth: "पूरे वर्ष; स्थानीय पर्वों के समय विशेष रौनक रहती है।",
+    specialEvent: "स्थानीय पूजा और लोक पर्व।",
+    story: "मरोदा क्षेत्र की लोक-आस्था और स्थानीय परंपराओं से जुड़ा मंदिर।"
+  },
+
+  "माँ पाताल भैरवी मंदिर (बर्फानी धाम)": {
+    category: "धार्मिक",
+    whyVisit: "मंदिर की अनोखी संरचना और धार्मिक वातावरण का अनुभव करने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "शरद पूर्णिमा और महाशिवरात्रि के आयोजन।",
+    story: "राजनांदगांव का प्रसिद्ध धार्मिक स्थल, अपनी विशिष्ट मंदिर संरचना और शिव-भक्ति से जुड़ी पहचान के लिए जाना जाता है।"
+  },
+
+  "माता कौशल्या मंदिर (चंद्रखुरी)": {
+    category: "धार्मिक",
+    whyVisit: "माता कौशल्या मंदिर के दर्शन और भगवान श्रीराम से जुड़ी धार्मिक मान्यताओं को जानने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "रामनवमी और नवरात्रि।",
+    story: "चंद्रखुरी का माता कौशल्या मंदिर भगवान श्रीराम की माता कौशल्या से जुड़ी धार्मिक मान्यता के लिए प्रसिद्ध है।"
+  },
+
+  "भांडदेउ जैन मंदिर (आरंग)": {
+    category: "ऐतिहासिक",
+    whyVisit: "प्राचीन जैन धरोहर और मंदिर स्थापत्य को देखने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "जैन धार्मिक आयोजन।",
+    story: "आरंग क्षेत्र की ऐतिहासिक जैन धरोहर और मंदिर स्थापत्य से जुड़ा स्थल।"
+  },
+
+  "नगपुरा पार्श्वनाथ जैन मंदिर": {
+    category: "धार्मिक",
+    whyVisit: "जैन धर्म के धार्मिक स्थल और शांत वातावरण का अनुभव करने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "जैन धार्मिक पर्व और आयोजन।",
+    story: "दुर्ग जिले के नगपुरा में स्थित प्रसिद्ध जैन तीर्थस्थल।"
+  },
+
+  "धमधा का किला (धमधा गढ़)": {
+    category: "ऐतिहासिक",
+    whyVisit: "धमधा क्षेत्र के पुराने गढ़ और स्थानीय इतिहास को जानने के लिए।",
+    bestMonth: "अक्टूबर से फरवरी।",
+    specialEvent: "स्थानीय सांस्कृतिक आयोजन।",
+    story: "धमधा क्षेत्र के पुराने गढ़ और स्थानीय इतिहास से जुड़ा स्थल।"
+  },
+
+  "देवरानी-जेठानी मंदिर और रुद्र शिव (तालागांव)": {
+    category: "ऐतिहासिक",
+    whyVisit: "प्राचीन मंदिरों और प्रसिद्ध रुद्र शिव प्रतिमा को देखने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "महाशिवरात्रि के अवसर पर धार्मिक गतिविधियाँ।",
+    story: "मनियारी नदी के पास स्थित प्राचीन मंदिर और प्रसिद्ध रुद्र शिव प्रतिमा के लिए तालागांव जाना जाता है।"
+  },
+
+  "पुरातात्विक नगरी मल्हार (मां डिडनेश्वरी मंदिर)": {
+    category: "ऐतिहासिक",
+    whyVisit: "प्राचीन पुरातात्विक अवशेषों और मंदिरों को देखने के लिए।",
+    bestMonth: "अक्टूबर से मार्च।",
+    specialEvent: "नवरात्रि के दौरान धार्मिक आयोजन।",
+    story: "मल्हार अपने प्राचीन पुरातात्विक अवशेषों और मां डिडनेश्वरी मंदिर के लिए जाना जाता है।"
+  },
+
   "भोरमदेव मंदिर": {
     category: "धार्मिक",
-    whyVisit: "प्राचीन मंदिर स्थापत्य और धार्मिक इतिहास को करीब से देखने के लिए।",
+    whyVisit: "प्राचीन मंदिर स्थापत्य, नक्काशी और धार्मिक इतिहास को करीब से देखने के लिए।",
     bestMonth: "अक्टूबर से मार्च; मौसम घूमने के लिए अच्छा रहता है।",
     specialEvent: "भोरमदेव महोत्सव।",
     story: "नक्काशीदार प्राचीन मंदिर के कारण इसे छत्तीसगढ़ का खजुराहो भी कहा जाता है।"
   }
 };
 
-// हर जिले की जगहों के लिए विवरण तैयार करना।
+
+// ==========================================
+// जिन जगहों की श्रेणी स्पष्ट है, उन्हें पहचानना
+// ==========================================
+
+function guessCategory(placeName) {
+  const name = placeName.toLowerCase();
+
+  if (
+    name.includes("अभयारण्य") ||
+    name.includes("राष्ट्रीय उद्यान") ||
+    name.includes("टाइगर रिजर्व") ||
+    name.includes("जंगल सफारी")
+  ) return "वन्यजीव";
+
+  if (
+    name.includes("मंदिर") ||
+    name.includes("धाम") ||
+    name.includes("देवी") ||
+    name.includes("देव") ||
+    name.includes("जैन") ||
+    name.includes("माता") ||
+    name.includes("शिव") ||
+    name.includes("भैरवी")
+  ) return "धार्मिक";
+
+  if (
+    name.includes("पुरातात्विक") ||
+    name.includes("किला") ||
+    name.includes("गढ़") ||
+    name.includes("शैलचित्र") ||
+    name.includes("गुफा") ||
+    name.includes("ऐतिहासिक")
+  ) return "ऐतिहासिक";
+
+  if (
+    name.includes("संस्कृति") ||
+    name.includes("हस्तशिल्प") ||
+    name.includes("कला") ||
+    name.includes("शिल्प") ||
+    name.includes("विश्वविद्यालय")
+  ) return "संस्कृति";
+
+  if (
+    name.includes("जलप्रपात") ||
+    name.includes("झरना") ||
+    name.includes("जलाशय") ||
+    name.includes("पहाड़ी") ||
+    name.includes("पहाड़") ||
+    name.includes("नदी") ||
+    name.includes("प्राकृतिक") ||
+    name.includes("द्वीप") ||
+    name.includes("नाला") ||
+    name.includes("सरोवर")
+  ) return "प्राकृतिक";
+
+  return "अन्य";
+}
+
+
+// ==========================================
+// हर जिले की जगहों के लिए विवरण तैयार करना
+// ==========================================
+
 const detailedPlaces = rawDistricts.map(district => {
   return district[3].map(placeName => {
+
     const extra = customDetailsMap[placeName] || {};
 
     return {
       name: placeName,
       location: district[1] + " जिला",
-      category: extra.category || "अन्य",
-      whyVisit: extra.whyVisit || "इस जगह की खासियत जानने और स्थानीय पर्यटन का अनुभव लेने के लिए।",
-      bestMonth: extra.bestMonth || "जानकारी जल्द जोड़ी जाएगी।",
-      specialEvent: extra.specialEvent || "कार्यक्रम की जानकारी जल्द जोड़ी जाएगी।",
-      story: extra.story || "इस स्थान की खास पहचान की जानकारी जल्द जोड़ी जाएगी।"
+
+      category: extra.category || guessCategory(placeName),
+
+      whyVisit: extra.whyVisit ||
+        "इस जगह की खासियत, स्थानीय पहचान और पर्यटन का अनुभव लेने के लिए।",
+
+      bestMonth: extra.bestMonth ||
+        "अक्टूबर से मार्च सामान्यतः घूमने के लिए अच्छा समय हो सकता है। स्थानीय मौसम की जानकारी जरूर लें।",
+
+      specialEvent: extra.specialEvent ||
+        "विशेष आयोजन की जानकारी स्थानीय स्रोत से पुष्टि करके जोड़ी जाएगी।",
+
+      story: extra.story ||
+        "इस स्थान की खास पहचान और इतिहास की जानकारी जल्द जोड़ी जाएगी।"
     };
   });
 });
 
-// कच्चे डेटा को वेबसाइट के उपयोग लायक रूप में बदलना।
+
+// ==========================================
+// जिले तैयार करना
+// ==========================================
+
 const districts = rawDistricts.map((d, i) => ({
   englishName: d[0],
   name: d[1],
@@ -536,6 +661,11 @@ const districts = rawDistricts.map((d, i) => ({
 }));
 
 const grid = document.getElementById("districtGrid");
+
+
+// ==========================================
+// जिले दिखाना
+// ==========================================
 
 function renderDistricts(list) {
   grid.innerHTML = "";
@@ -562,26 +692,39 @@ function renderDistricts(list) {
 
     button.append(emoji, name, english);
     button.addEventListener("click", () => openDistrict(district));
+
     grid.appendChild(button);
   });
 }
 
+
+// ==========================================
+// जिला सर्च फिल्टर
+// ==========================================
+
 function filterDistricts() {
-  const query = document.getElementById("search").value.trim().toLowerCase();
+  const query = document.getElementById("search").value
+    .trim().toLowerCase();
 
   const filtered = districts.filter(district =>
     district.englishName.toLowerCase().includes(query) ||
     district.name.toLowerCase().includes(query)
   );
 
-  // सर्च के बाद जिला सूची दिखे; पुराना विवरण बंद रहे।
   document.getElementById("details").classList.add("hidden");
+
   renderDistricts(filtered);
 }
+
+
+// ==========================================
+// चुने हुए जिले की जगहें दिखाना
+// ==========================================
 
 let currentDistrictPlaces = [];
 
 function openDistrict(district) {
+
   document.getElementById("districtTitle").textContent =
     district.emoji + " " + district.name;
 
@@ -590,17 +733,26 @@ function openDistrict(district) {
 
   currentDistrictPlaces = district.places;
 
-  // फिल्टर को दोबारा सभी जगहों पर सेट करना।
   document.getElementById("placeCategoryFilter").value = "सभी";
 
   renderPlaces();
 
   document.getElementById("details").classList.remove("hidden");
-  document.getElementById("details").scrollIntoView({ behavior: "smooth" });
+
+  document.getElementById("details").scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
+
+// ==========================================
+// पर्यटन स्थल का फिल्टर और विवरण
+// ==========================================
+
 function renderPlaces() {
+
   const placesBox = document.getElementById("places");
+
   const selectedCategory =
     document.getElementById("placeCategoryFilter").value;
 
@@ -612,11 +764,13 @@ function renderPlaces() {
   );
 
   if (filteredPlaces.length === 0) {
-    placesBox.textContent = "इस प्रकार की जगह अभी सूची में नहीं है।";
+    placesBox.textContent =
+      "इस प्रकार की जगह अभी इस जिले की सूची में नहीं है।";
     return;
   }
 
   filteredPlaces.forEach((place, index) => {
+
     const row = document.createElement("div");
     row.className = "place";
 
@@ -630,6 +784,7 @@ function renderPlaces() {
     info.className = "place-info hidden";
 
     function addInfo(label, value) {
+
       const p = document.createElement("p");
       p.style.margin = "4px 0";
 
@@ -651,8 +806,11 @@ function renderPlaces() {
     addInfo("खास पहचान", place.story);
 
     button.addEventListener("click", () => {
+
       const isOpening = info.classList.contains("hidden");
+
       info.classList.toggle("hidden");
+
       button.setAttribute("aria-expanded", String(isOpening));
     });
 
@@ -660,28 +818,51 @@ function renderPlaces() {
     placesBox.appendChild(row);
   });
 }
-  document.getElementById("details").classList.remove("hidden");
-  document.getElementById("details").scrollIntoView({ behavior: "smooth" });
-}
+
+
+// ==========================================
+// वापस जाने का बटन
+// ==========================================
 
 function closeDetails() {
+
   document.getElementById("details").classList.add("hidden");
-  document.getElementById("districts").scrollIntoView({ behavior: "smooth" });
+
+  document.getElementById("districts").scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
+
+// ==========================================
+// मुख्य नेविगेशन
+// ==========================================
+
 function go(id) {
+
   const section = document.getElementById(id);
+
   if (section) {
-    section.scrollIntoView({ behavior: "smooth" });
+    section.scrollIntoView({
+      behavior: "smooth"
+    });
   }
 }
 
-// जिला सूची पहली बार दिखाना।
+
+// ==========================================
+// वेबसाइट शुरू करना
+// ==========================================
+
 renderDistricts(districts);
 
-// पर्यटन स्थल का प्रकार चुनने पर फिल्टर करना।
+document.getElementById("search")
+  .addEventListener("input", filterDistricts);
+
 document.getElementById("placeCategoryFilter")
   .addEventListener("change", renderPlaces);
+  
+
 </script>
 </body>
 </html>
