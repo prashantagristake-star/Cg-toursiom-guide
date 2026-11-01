@@ -306,33 +306,7 @@ const rawDistricts = [
   ["Surajpur","सूरजपुर","💧",["कुदरगढ़ मंदिर","रकसगंडा जलप्रपात क्षेत्र"]],
   ["Surguja","सरगुजा","⛰️",["मैनपाट","रामगढ़ की पहाड़ियाँ एवं गुफाएँ","ठिनठिनी पत्थर"]]
 ];
-function filterByCategory(categoryName) {
-    const districtGrid = document.getElementById("districtgrid");
-    
-    // यह डेटा में से उस कैटेगरी से जुड़े स्थानों को छाँटकर निकालेगा
-    const filteredResults = rawDistricts.filter(item => {
-        return JSON.stringify(item).includes(categoryName);
-    });
 
-    let htmlContent = "";
-    if(filteredResults.length > 0) {
-        filteredResults.forEach(item => {
-            htmlContent += `
-                <div class="district-card" style="background:#fff; padding:15px; margin:10px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
-                    <h3>${item[0]} (${item[1]})</h3>
-                    <p>${item[3] ? item[3] : ''}</p>
-                </div>
-            `;
-        });
-    } else {
-        htmlContent = `<p style="text-align:center; padding:20px;">इस कैटेगरी का डेटा अभी उपलब्ध नहीं है।</p>`;
-    }
-
-    if(districtGrid) {
-        districtGrid.innerHTML = htmlContent;
-        districtGrid.scrollIntoView({ behavior: 'smooth' });
-    }
-    }
    
 const customDetailsMap = {
   "सियादेवी मंदिर एवं जलप्रपात": { bestMonth: "जुलाई से फरवरी", specialEvent: "महाशिवरात्रि पर मेला", story: "प्राकृतिक हरियाली और झरने के साथ माता सियादेवी का पवित्र मंदिर।" },
@@ -350,25 +324,37 @@ const customDetailsMap = {
 };
 
 const detailedPlaces = rawDistricts.map(d => {
-  return d[3].map(placeName => {
-    if (customDetailsMap[placeName]) {
-      return {
-        name: placeName,
-        location: d[1] + ' जिला',
-        category: 'पर्यटन स्थल',
-        ...customDetailsMap[placeName]
-      };
-    } else {
-      return {
-        name: placeName,
-        location: d[1] + ' जिला',
-        category: 'पर्यटन स्थल',
-        bestMonth: 'अक्टूबर से मार्च (सुहाना मौसम)',
-        specialEvent: 'स्थानीय सांस्कृतिक एवं धार्मिक पर्व मेला',
-        story: 'यह पर्यटन स्थल छत्तीसगढ़ की प्राकृतिक सुंदरता और ऐतिहासिक धरोहर का एक महत्वपूर्ण हिस्सा है।'
-      };
-    }
-  });
+    return d[3].map(placeName => {
+        // स्वतः पहचानें कि कौन सी जगह किस कैटेगरी में आएगी
+        let cat = 'प्रकृति';
+        if (placeName.includes('मंदिर') || placeName.includes('धमधा') || placeName.includes('महल') || placeName.includes('गुफा') || placeName.includes('स्थल') || placeName.includes('शिल्प') || placeName.includes('डोंगरगढ़')) {
+            cat = 'धरोहर';
+        } else if (placeName.includes('अभ्यारण्य') || placeName.includes('उद्यान') || placeName.includes('टाइगर') || placeName.includes('सफारी')) {
+            cat = 'वन्यजीव';
+        } else if (placeName.includes('लोक') || placeName.includes('संस्कृति') || placeName.includes('संग्रहालय') || placeName.includes('नृत्य') || placeName.includes('कला')) {
+            cat = 'संस्कृति';
+        }
+
+        if (customDetailsMap[placeName]) {
+            return {
+                name: placeName,
+                location: d[1] + ' जिला',
+                category: cat,
+                ...customDetailsMap[placeName]
+            };
+        } else {
+            return {
+                name: placeName,
+                location: d[1] + ' जिला',
+                category: cat,
+                bestMonth: 'अक्टूबर से मार्च (सुहाना मौसम)',
+                specialEvent: 'स्थानीय सांस्कृतिक एवं धार्मिक पर्व मेला',
+                story: 'यह पर्यटन स्थल छत्तीसगढ़ की प्राकृतिक सुंदरता और ऐतिहासिक धरोहर का एक बेहतरीन हिस्सा है।'
+            };
+        }
+    });
+});
+    
 });
 
 const districts = rawDistricts.map((d, i) => ({
@@ -412,6 +398,36 @@ function filterDistricts() {
     d.englishName.toLowerCase().includes(q) || 
     d.name.toLowerCase().includes(q)
   ));
+    function filterByCategory(categoryName) {
+    let matchedPlaces = [];
+    detailedPlaces.forEach(districtList => {
+        districtList.forEach(place => {
+            if (place.category === categoryName) {
+                matchedPlaces.push(place);
+            }
+        });
+    });
+
+    const grid = document.getElementById("districtGrid");
+    if (grid) {
+        grid.innerHTML = "";
+        if (matchedPlaces.length > 0) {
+            matchedPlaces.forEach(d => {
+                const card = document.createElement("div");
+                card.className = "district-card";
+                card.innerHTML = `
+                    <strong>${d.name}</strong>
+                    <small style="display:block; color:#666; margin-top:4px;">📍 ${d.location} | श्रेणी: ${d.category}</small>
+                    <p style="margin-top:8px; font-size:14px;">${d.story || ''}</p>
+                `;
+                card.onclick = () => openDistrict(d);
+                grid.appendChild(card);
+            });
+        } else {
+            grid.innerHTML = `<p style="text-align:center; padding:20px; grid-column: 1 / -1;">इस कैटेगरी में अभी कोई स्थान नहीं है।</p>`;
+        }
+        grid.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
 function openDistrict(d) {
