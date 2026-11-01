@@ -8,23 +8,51 @@
 <title>CG Tourism Guide | चलो छत्तीसगढ़ घूमते हैं</title>
 
 <style>
-/* छत्तीसगढ़ स्थापना दिवस स्पेशल बैनर स्टाइल */
+/* छत्तीसगढ़ स्थापना दिवस शानदार एनिमेटेड बैनर स्टाइल */
 .cg-fest-banner {
-  background: linear-gradient(135deg, #102f28, #27634b);
-  color: #fff;
-  text-align: center;
-  padding: 14px 20px;
-  font-size: 15px;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border-bottom: 3px solid #d8e9ad;
+    background: linear-gradient(135deg, #102f28, #27634b, #163c32);
+    color: #fff;
+    text-align: center;
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-bottom: 3px solid #d8e9ad;
+    overflow: hidden;
+    animation: bannerSlideDown 1s ease-out;
 }
+
+.cg-fest-banner span {
+    color: #ffd700;
+    font-size: 18px;
+    display: inline-block;
+    animation: pulseGlow 2s infinite;
+}
+
+/* शानदार ग्लोइंग और स्लाइड एनीमेशन */
+@keyframes bannerSlideDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulseGlow {
+    0% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+    50% { transform: scale(1.05); text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); }
+    100% { transform: scale(1); text-shadow: 0 0 5px rgba(255, 215, 0, 0.5); }
+}
+  
 .cg-fest-banner span {
   color: #d8e9ad;
   font-size: 17px;
@@ -103,10 +131,10 @@ footer p{font-size:14px}
 
 <body>
   <!-- छत्तीसगढ़ स्थापना दिवस 7-दिवसीय ऑटो बैनर -->
-  <div id="cgFestBanner" class="cg-fest-banner" style="display: none;">
-    <span>🌾 छत्तीसगढ़ महतारी की जय!</span> 
-    छत्तीसगढ़ राज्य स्थापना के गौरवशाली 26 वर्ष पूर्ण होने पर समस्त प्रदेशवासियों को हार्दिक बधाई एवं शुभकामनाएँ! 🌿
+  <div class="cg-fest-banner">
+    <span>✨ छत्तीसगढ़ स्थापना दिवस की हार्दिक शुभकामनाएँ! Chhattisgarh Foundation Day ✨</span>
   </div>
+  
 
   <script>
     const today = new Date();
