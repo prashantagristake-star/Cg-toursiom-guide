@@ -173,10 +173,33 @@ footer p{font-size:14px}
   <p class="subtitle">भारत के इस खूबसूरत राज्य की प्राकृतिक सुंदरता, इतिहास और संस्कृति की खोज करें।</p>
 
   <div class="feature-grid">
-    <div class="feature"><span>🏞️</span><h3>प्रकृति</h3><p>झरने, पहाड़ और जंगल</p></div>
-    <div class="feature"><span>🛕</span><h3>धरोहर</h3><p>मंदिर और ऐतिहासिक स्थल</p></div>
-    <div class="feature"><span>🐘</span><h3>वन्यजीव</h3><p>अभयारण्य और जैव विविधता</p></div>
-    <div class="feature"><span>🎭</span><h3>संस्कृति</h3><p>स्थानीय कला और परंपराएँ</p></div>
+    <!-- प्रकृति कार्ड -->
+    <div class="feature" onclick="filterByCategory('प्रकृति')">
+        <span>🏞️</span>
+        <h3>प्रकृति</h3>
+        <p>झरने, पहाड़ और जंगल</p>
+    </div>
+
+    <!-- धरोहर कार्ड -->
+    <div class="feature" onclick="filterByCategory('धरोहर')">
+        <span>🛕</span>
+        <h3>धरोहर</h3>
+        <p>मंदिर और ऐतिहासिक स्थल</p>
+    </div>
+
+    <!-- वन्यजीव कार्ड -->
+    <div class="feature" onclick="filterByCategory('वन्यजीव')">
+        <span>🐘</span>
+        <h3>वन्यजीव</h3>
+        <p>अभ्यारण्य और जैव विविधता</p>
+    </div>
+
+    <!-- संस्कृति कार्ड -->
+    <div class="feature" onclick="filterByCategory('संस्कृति')">
+        <span>🎭</span>
+        <h3>संस्कृति</h3>
+        <p>स्थानीय कला और परंपराएँ</p>
+    </div>
   </div>
 
   <div class="callout">
@@ -283,7 +306,34 @@ const rawDistricts = [
   ["Surajpur","सूरजपुर","💧",["कुदरगढ़ मंदिर","रकसगंडा जलप्रपात क्षेत्र"]],
   ["Surguja","सरगुजा","⛰️",["मैनपाट","रामगढ़ की पहाड़ियाँ एवं गुफाएँ","ठिनठिनी पत्थर"]]
 ];
+function filterByCategory(categoryName) {
+    const districtGrid = document.getElementById("districtgrid");
+    
+    // यह डेटा में से उस कैटेगरी से जुड़े स्थानों को छाँटकर निकालेगा
+    const filteredResults = rawDistricts.filter(item => {
+        return JSON.stringify(item).includes(categoryName);
+    });
 
+    let htmlContent = "";
+    if(filteredResults.length > 0) {
+        filteredResults.forEach(item => {
+            htmlContent += `
+                <div class="district-card" style="background:#fff; padding:15px; margin:10px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);">
+                    <h3>${item[0]} (${item[1]})</h3>
+                    <p>${item[3] ? item[3] : ''}</p>
+                </div>
+            `;
+        });
+    } else {
+        htmlContent = `<p style="text-align:center; padding:20px;">इस कैटेगरी का डेटा अभी उपलब्ध नहीं है।</p>`;
+    }
+
+    if(districtGrid) {
+        districtGrid.innerHTML = htmlContent;
+        districtGrid.scrollIntoView({ behavior: 'smooth' });
+    }
+    }
+   
 const customDetailsMap = {
   "सियादेवी मंदिर एवं जलप्रपात": { bestMonth: "जुलाई से फरवरी", specialEvent: "महाशिवरात्रि पर मेला", story: "प्राकृतिक हरियाली और झरने के साथ माता सियादेवी का पवित्र मंदिर।" },
   "तांदुला जलाशय": { bestMonth: "अक्टूबर से मार्च", specialEvent: "नौकायन उत्सव", story: "तांदुला नदी पर बना विशाल जलाशय।" },
