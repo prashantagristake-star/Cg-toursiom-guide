@@ -285,7 +285,18 @@ footer p { font-size: 14px; }
     <h3 id="districtTitle"></h3>
     <p id="districtIntro"></p>
     <h4>घूमने की जगहें</h4>
-    <div id="places"></div>
+
+<select id="placeCategoryFilter" class="search"
+  aria-label="पर्यटन स्थल का प्रकार चुनें">
+  <option value="सभी">सभी जगहें देखें</option>
+  <option value="प्राकृतिक">🏞️ प्राकृतिक स्थल</option>
+  <option value="धार्मिक">🛕 धार्मिक स्थल</option>
+  <option value="ऐतिहासिक">🏛️ ऐतिहासिक स्थल</option>
+  <option value="वन्यजीव">🐘 वन्यजीव स्थल</option>
+  <option value="संस्कृति">🎭 कला और संस्कृति</option>
+</select>
+
+<div id="places"></div>
     <p style="font-size:13px;color:#68786d;margin-top:15px;">
       यात्रा से पहले स्थान, पहुँच, खुलने का समय और प्रवेश नियमों की
       स्थानीय या आधिकारिक स्रोत से पुष्टि करें।
@@ -474,23 +485,44 @@ const customDetailsMap = {
     bestMonth: "अक्टूबर से मार्च",
     specialEvent: "नवरात्रि के दौरान धार्मिक आयोजन",
     story: "मल्हार अपने प्राचीन पुरातात्विक अवशेषों और मां डिडनेश्वरी मंदिर के लिए जाना जाता है।"
+  },
+  "चित्रकोट जलप्रपात": {
+    category: "प्राकृतिक",
+    whyVisit: "विशाल जलप्रपात, प्राकृतिक सुंदरता और फोटोग्राफी का आनंद लेने के लिए।",
+    bestMonth: "जुलाई से अक्टूबर; इस समय जलप्रपात में पानी अधिक रहता है।",
+    specialEvent: "स्थानीय पर्यटन और सांस्कृतिक आयोजन।",
+    story: "इंद्रावती नदी पर स्थित चित्रकोट जलप्रपात अपने घोड़े की नाल जैसे आकार और विशाल फैलाव के लिए प्रसिद्ध है।"
+  },
+
+  "कांगेर घाटी राष्ट्रीय उद्यान": {
+    category: "वन्यजीव",
+    whyVisit: "घने जंगल, जैव विविधता और प्राकृतिक गुफाओं को देखने के लिए।",
+    bestMonth: "नवंबर से मार्च; मौसम अपेक्षाकृत सुहावना रहता है।",
+    specialEvent: "प्रकृति एवं वन्यजीव जागरूकता गतिविधियाँ।",
+    story: "कुटुमसर गुफाओं और समृद्ध जैव विविधता के लिए प्रसिद्ध राष्ट्रीय उद्यान।"
+  },
+  "भोरमदेव मंदिर": {
+    category: "धार्मिक",
+    whyVisit: "प्राचीन मंदिर स्थापत्य और धार्मिक इतिहास को करीब से देखने के लिए।",
+    bestMonth: "अक्टूबर से मार्च; मौसम घूमने के लिए अच्छा रहता है।",
+    specialEvent: "भोरमदेव महोत्सव।",
+    story: "नक्काशीदार प्राचीन मंदिर के कारण इसे छत्तीसगढ़ का खजुराहो भी कहा जाता है।"
   }
 };
 
 // हर जिले की जगहों के लिए विवरण तैयार करना।
 const detailedPlaces = rawDistricts.map(district => {
   return district[3].map(placeName => {
-    const extra = customDetailsMap[placeName] || {
-      bestMonth: "जानकारी की पुष्टि के बाद जोड़ी जाएगी",
-      specialEvent: "कार्यक्रम की जानकारी जल्द जोड़ी जाएगी",
-      story: "इस स्थान का इतिहास और विशेष पहचान रिसर्च के बाद जोड़ी जाएगी।"
-    };
+    const extra = customDetailsMap[placeName] || {};
 
     return {
       name: placeName,
       location: district[1] + " जिला",
-      category: "पर्यटन स्थल",
-      ...extra
+      category: extra.category || "अन्य",
+      whyVisit: extra.whyVisit || "इस जगह की खासियत जानने और स्थानीय पर्यटन का अनुभव लेने के लिए।",
+      bestMonth: extra.bestMonth || "जानकारी जल्द जोड़ी जाएगी।",
+      specialEvent: extra.specialEvent || "कार्यक्रम की जानकारी जल्द जोड़ी जाएगी।",
+      story: extra.story || "इस स्थान की खास पहचान की जानकारी जल्द जोड़ी जाएगी।"
     };
   });
 });
@@ -547,16 +579,44 @@ function filterDistricts() {
   renderDistricts(filtered);
 }
 
+let currentDistrictPlaces = [];
+
 function openDistrict(district) {
   document.getElementById("districtTitle").textContent =
     district.emoji + " " + district.name;
-document.getElementById("districtIntro").textContent =
+
+  document.getElementById("districtIntro").textContent =
     district.name + " जिले के पर्यटन स्थलों की जानकारी:";
 
+  currentDistrictPlaces = district.places;
+
+  // फिल्टर को दोबारा सभी जगहों पर सेट करना।
+  document.getElementById("placeCategoryFilter").value = "सभी";
+
+  renderPlaces();
+
+  document.getElementById("details").classList.remove("hidden");
+  document.getElementById("details").scrollIntoView({ behavior: "smooth" });
+}
+
+function renderPlaces() {
   const placesBox = document.getElementById("places");
+  const selectedCategory =
+    document.getElementById("placeCategoryFilter").value;
+
   placesBox.innerHTML = "";
 
-  district.places.forEach((place, index) => {
+  const filteredPlaces = currentDistrictPlaces.filter(place =>
+    selectedCategory === "सभी" ||
+    place.category === selectedCategory
+  );
+
+  if (filteredPlaces.length === 0) {
+    placesBox.textContent = "इस प्रकार की जगह अभी सूची में नहीं है।";
+    return;
+  }
+
+  filteredPlaces.forEach((place, index) => {
     const row = document.createElement("div");
     row.className = "place";
 
@@ -577,7 +637,7 @@ document.getElementById("districtIntro").textContent =
       strong.textContent = label + ": ";
 
       const span = document.createElement("span");
-      span.textContent = value || "जानकारी जल्द जोड़ी जाएगी";
+      span.textContent = value || "जानकारी जल्द जोड़ी जाएगी।";
 
       p.append(strong, span);
       info.appendChild(p);
@@ -585,9 +645,10 @@ document.getElementById("districtIntro").textContent =
 
     addInfo("स्थान", place.location);
     addInfo("प्रकार", place.category);
-    addInfo("घूमने का सही समय", place.bestMonth);
+    addInfo("यहाँ क्यों जाएँ", place.whyVisit);
+    addInfo("घूमने का अच्छा समय", place.bestMonth);
     addInfo("खास आयोजन", place.specialEvent);
-    addInfo("कहानी और खास महत्व", place.story);
+    addInfo("खास पहचान", place.story);
 
     button.addEventListener("click", () => {
       const isOpening = info.classList.contains("hidden");
@@ -598,7 +659,7 @@ document.getElementById("districtIntro").textContent =
     row.append(button, info);
     placesBox.appendChild(row);
   });
-
+}
   document.getElementById("details").classList.remove("hidden");
   document.getElementById("details").scrollIntoView({ behavior: "smooth" });
 }
@@ -618,8 +679,9 @@ function go(id) {
 // जिला सूची पहली बार दिखाना।
 renderDistricts(districts);
 
-// सर्च बॉक्स पर टाइप करते ही जिले फिल्टर करना।
-document.getElementById("search").addEventListener("input", filterDistricts);
+// पर्यटन स्थल का प्रकार चुनने पर फिल्टर करना।
+document.getElementById("placeCategoryFilter")
+  .addEventListener("change", renderPlaces);
 </script>
 </body>
 </html>
