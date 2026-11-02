@@ -288,14 +288,22 @@ footer p { font-size: 14px; }
 
 <select id="placeCategoryFilter" class="search"
   aria-label="पर्यटन स्थल का प्रकार चुनें">
-  <option value="सभी">सभी जगहें देखें</option>
+
+  <option value="सभी">🌍 सभी जगहें देखें</option>
+
   <option value="प्राकृतिक">🏞️ प्राकृतिक स्थल</option>
-  <option value="धार्मिक">🛕 धार्मिक स्थल</option>
-  <option value="ऐतिहासिक">🏛️ ऐतिहासिक स्थल</option>
-  <option value="वन्यजीव">🐘 वन्यजीव स्थल</option>
-  <option value="संस्कृति">🎭 कला और संस्कृति</option>
-  <option value="अन्य">📍 अन्य पर्यटन स्थल</option>
+
+  <option value="धरोहर">🏛️ धरोहर एवं विरासत</option>
+
+  <option value="वन्यजीव">🐅 वन्यजीव एवं जैव विविधता</option>
+
+  <option value="संस्कृति">🎭 संस्कृति एवं परंपरा</option>
+
+  <option value="साहसिक">🚵 साहसिक पर्यटन</option>
+
 </select>
+
+<p id="filterMessage" style="color:#17633e; font-weight:bold;"></p>
 
 <div id="places"></div>
     <p style="font-size:13px;color:#68786d;margin-top:15px;">
@@ -861,7 +869,37 @@ document.getElementById("search")
 
 document.getElementById("placeCategoryFilter")
   .addEventListener("change", renderPlaces);
-  
+  document.getElementById("placeCategoryFilter")
+.addEventListener("change", function() {
+
+  const category = this.value;
+  const message = document.getElementById("filterMessage");
+
+  if (category === "सभी") {
+    message.textContent = "सभी पर्यटन स्थल दिखाए जा रहे हैं।";
+  }
+
+  else if (category === "प्राकृतिक") {
+    message.textContent = "🏞️ प्राकृतिक स्थलों की जानकारी जल्द जोड़ी जाएगी।";
+  }
+
+  else if (category === "धरोहर") {
+    message.textContent = "🏛️ धरोहर एवं विरासत की जानकारी जल्द जोड़ी जाएगी।";
+  }
+
+  else if (category === "वन्यजीव") {
+    message.textContent = "🐅 वन्यजीव एवं जैव विविधता की जानकारी जल्द जोड़ी जाएगी।";
+  }
+
+  else if (category === "संस्कृति") {
+    message.textContent = "🎭 संस्कृति एवं परंपरा की जानकारी जल्द जोड़ी जाएगी।";
+  }
+
+  else if (category === "साहसिक") {
+    message.textContent = "🚵 साहसिक पर्यटन की जानकारी जल्द जोड़ी जाएगी।";
+  }
+
+});
 
 </script>
 </body>
