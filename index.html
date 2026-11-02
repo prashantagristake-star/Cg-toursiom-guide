@@ -8,6 +8,19 @@
 <title>CG Tourism Guide | चलो छत्तीसगढ़ घूमते हैं</title>
 
 <style>
+  .feature {
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.feature:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px #0002;
+}
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
@@ -254,12 +267,41 @@ footer p { font-size: 14px; }
   <h2 class="section-title">छत्तीसगढ़ को करीब से जानें</h2>
   <p class="subtitle">भारत के इस खूबसूरत राज्य की प्राकृतिक सुंदरता, इतिहास और संस्कृति की खोज करें।</p>
 
-  <div class="feature-grid">
-    <div class="feature"><span>🏞️</span><h3>प्रकृति</h3><p>झरने, पहाड़ और जंगल</p></div>
-    <div class="feature"><span>🛕</span><h3>धरोहर</h3><p>मंदिर और ऐतिहासिक स्थल</p></div>
-    <div class="feature"><span>🐘</span><h3>वन्यजीव</h3><p>अभयारण्य और जैव विविधता</p></div>
-    <div class="feature"><span>🎭</span><h3>संस्कृति</h3><p>स्थानीय कला और परंपराएँ</p></div>
-  </div>
+ <div class="feature-grid">
+
+  <button class="feature" onclick="openCategory('प्राकृतिक')">
+    <span>🏞️</span>
+    <h3>प्राकृतिक स्थल</h3>
+    <p>झरने, पहाड़ और जंगल</p>
+  </button>
+
+  <button class="feature" onclick="openCategory('धरोहर')">
+    <span>🏛️</span>
+    <h3>धरोहर एवं विरासत</h3>
+    <p>मंदिर और ऐतिहासिक स्थल</p>
+  </button>
+
+  <button class="feature" onclick="openCategory('वन्यजीव')">
+    <span>🐅</span>
+    <h3>वन्यजीव</h3>
+    <p>अभयारण्य और जैव विविधता</p>
+  </button>
+
+  <button class="feature" onclick="openCategory('संस्कृति')">
+    <span>🎭</span>
+    <h3>संस्कृति एवं परंपरा</h3>
+    <p>जनजातियाँ, कला, मेले और त्योहार</p>
+  </button>
+
+  <button class="feature" onclick="openCategory('साहसिक')">
+    <span>🚵</span>
+    <h3>साहसिक पर्यटन</h3>
+    <p>ट्रेकिंग और साहसिक गतिविधियाँ</p>
+  </button>
+
+</div>
+
+<div id="categoryMessage"></div>
 
   <div class="callout">
     <h3>इस वेबसाइट का उद्देश्य 💚</h3>
@@ -900,7 +942,17 @@ document.getElementById("placeCategoryFilter")
   }
 
 });
+function openCategory(category) {
 
+  const message = document.getElementById("categoryMessage");
+
+  message.innerHTML = `
+    <h3>${category} पर्यटन</h3>
+    <p>इस श्रेणी के पर्यटन स्थलों की जानकारी जल्द जोड़ी जाएगी।</p>
+  `;
+
+  message.scrollIntoView({ behavior: "smooth" });
+}
 </script>
 </body>
 </html>
