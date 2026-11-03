@@ -405,14 +405,12 @@ footer p { font-size: 14px; }
 })();
 
 function openCategory(catName) {
-  // 1. संभाग और सर्च बॉक्स को छिपाएं
-  const divWrapper = document.getElementById("divisionsWrapper");
-  const districtGrid = document.getElementById("districtGrid");
-  const searchBox = document.getElementById("search");
+  // 1. संभाग, जिला ग्रिड और सर्च बॉक्स को छिपाएं
+  const divisionView = document.getElementById("divisionView");
+  const districtView = document.getElementById("districtView");
   
-  if (divWrapper) divWrapper.style.display = "none";
-  if (districtGrid) districtGrid.style.display = "none";
-  if (searchBox) searchBox.style.display = "none";
+  if (divisionView) divisionView.classList.add("hidden");
+  if (districtView) districtView.classList.add("hidden");
 
   // 2. डिटेल्स बॉक्स को सामने लाएं
   const detailsBox = document.getElementById("details");
@@ -466,7 +464,7 @@ function openCategory(catName) {
     }
 
     // 5-बिंदु फॉर्मेट
-    addInfo("1) प्रकार", place.type);
+    addInfo("1) प्रकार", place.category);
     addInfo("2) महत्व", place.importance);
     addInfo("3) समय", place.bestTime);
     addInfo("4) आयोजन", place.events);
@@ -512,8 +510,8 @@ const divisionData = {
       { name: "बिलासपुर", emoji: "🏛️", intro: "गठन: 1861 (मूल जिला)। वर्तमान स्थिति: न्यायधानी बिलासपुर, रतनपुर महामाया शक्तिपीठ और तालागांव के रुद्र शिव के कारण धार्मिक व पुरातात्विक पर्यटन का प्रमुख गढ़ है।", places: ["रतनपुर महामाया मंदिर", "कानन पेंडारी प्राणी उद्यान", "देवरानी-जेठानी मंदिर और रुद्र शिव (तालागांव)", "पुरातात्विक नगरी मल्हार (मां डिडनेश्वरी मंदिर)"] },
       { name: "रायगढ़", emoji: "🏛️", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: सिंघनपुर के पाषाणकालीन शैलचित्रों और सांस्कृतिक आयोजनों के कारण यह इतिहास प्रेमियों के लिए विशेष महत्व रखता है।", places: ["राम झरना", "सिंघनपुर शैलचित्र क्षेत्र", "कमला नेहरू पार्क", "मदनपुरगढ़"] },
       { name: "जांजगीर-चांपा", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: शिवरीनारायण संगम और ऐतिहासिक मंदिरों की नगरी के रूप में यह धार्मिक पर्यटन का बहुत बड़ा केंद्र है।", places: ["विष्णु मंदिर, जांजगीर", "शिवरीनारायण मंदिर", "लक्ष्मणेश्वर मंदिर, खरौद"] },
-      { name: "कोरबा", emoji: "💧", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: 'सतरेंगा' बैकवॉटर और हसदेव बांगो बांध के विकास से यह छत्तीसगढ़ में वाटर टूरिज्म का सबसे बड़ा हॉटस्पॉट बन गया है।", places: ["सतरेंगा", "बुका जलाशय क्षेत्र", "केंदई जलप्रपात", "हसदेव बांगो बांध", "पाली का प्राची
-                                                                                                                                                                                                  { name: "मुंगेली", emoji: "🐅", intro: "गठन: 2012 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अचानकमार टाइगर रिजर्व और मदकू द्वीप के चलते यह वन्यजीव प्रेमियों और शोधकर्ताओं के लिए आकर्षण का केंद्र है।", places: ["अचानकमार टाइगर रिजर्व क्षेत्र", "मदकू द्वीप", "सेतगंगा"] },
+      { name: "कोरबा", emoji: "💧", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: 'सतरेंगा' बैकवॉटर और हसदेव बांगो बांध के विकास से यह छत्तीसगढ़ में वाटर टूरिज्म का सबसे बड़ा हॉटस्पॉट बन गया है।", places: ["सतरेंगा", "बुका जलाशय क्षेत्र", "केंदई जलप्रपात", "हसदेव बांगो बांध", "पाली का प्राचीन शिव मंदिर"] },
+      { name: "मुंगेली", emoji: "🐅", intro: "गठन: 2012 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अचानकमार टाइगर रिजर्व और मदकू द्वीप के चलते यह वन्यजीव प्रेमियों और शोधकर्ताओं के लिए आकर्षण का केंद्र है।", places: ["अचानकमार टाइगर रिजर्व क्षेत्र", "मदकू द्वीप", "सेतगंगा"] },
       { name: "गौरेला-पेंड्रा-मरवाही", emoji: "🌲", intro: "गठन: 2020 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अरपा नदी के उद्गम सोनमुड़ा और पहाड़ी ठंडी आबोहवा के कारण यह हिल स्टेशन के रूप में तेजी से विकसित हो रहा है।", places: ["अरपा नदी का उद्गम (सोनमुड़ा)", "कबीर चबूतरा", "अचानकमार क्षेत्र की प्राकृतिक सुंदरता"] },
       { name: "सक्ती", emoji: "🌊", intro: "गठन: 2022 (मातृ जिला: जांजगीर-चांपा)। वर्तमान स्थिति: दमाऊ धारा जलप्रपात और गुंजी के प्राचीन ऋषभ तीर्थ शिलालेखों के कारण यह पर्यटन मानचित्र पर उभर रहा है।", places: ["दमाऊ धारा क्षेत्र", "तुरी धाम", "गुंजी (ऋषभ तीर्थ)"] },
       { name: "सारंगढ़-बिलाईगढ़", emoji: "🌾", intro: "गठन: 2022 (मातृ जिला: रायगढ़/बलौदाबाजार)। वर्तमान स्थिति: गोमर्डा वन्यजीव अभयारण्य और चंद्रहासिनी देवी मंदिर के माध्यम से वन्यजीव व धार्मिक पर्यटन को बढ़ावा मिल रहा है।", places: ["गोमर्डा वन्यजीव अभयारण्य क्षेत्र", "सारंगढ़ पैलेस", "चंद्रहासिनी देवी मंदिर (चंद्रपुर)"] }
@@ -582,8 +580,7 @@ Object.keys(divisionData).forEach(divisionName => {
     });
   });
 });
-
-const divisionGrid = document.getElementById("divisionGrid");
+  const divisionGrid = document.getElementById("divisionGrid");
 function renderDivisions() {
   divisionGrid.innerHTML = "";
   Object.keys(divisionData).forEach(divName => {
@@ -610,7 +607,9 @@ function openDivision(divName) {
   document.getElementById("selectedDivisionTitle").textContent = `📂 ${divName} के अंतर्गत आने वाले जिले`;
   document.getElementById("sectionSubtitle").textContent = `${divName} के किसी भी जिले पर क्लिक करके उसकी पर्यटन गाइड देखें।`;
   renderDistrictList(divName, "");
-        function showDivisions() {
+}
+
+function showDivisions() {
   document.getElementById("districtView").classList.add("hidden");
   document.getElementById("details").classList.add("hidden");
   document.getElementById("divisionView").classList.remove("hidden");
@@ -653,11 +652,6 @@ document.getElementById("search").addEventListener("input", function() {
 });
 
 function openDistrict(district) {
-  document.getElementById("divisionView").classList.add("hidden");
-  document.getElementById("districtView").classList.add("hidden");
-  document.getElementById("divisionsWrapper").style.display = "none";
-  document.getElementById("search").style.display = "none";
-
   document.getElementById("districtTitle").textContent = district.emoji + " " + district.name + " जिला";
   document.getElementById("districtIntro").textContent = district.intro;
 
@@ -677,16 +671,7 @@ function openDistrict(district) {
         <p style="margin: 4px 0;"><strong>5) पहचान:</strong> ${place.keyFeature}</p>
       </div>
     `;
-
-    const btn = placeDiv.querySelector(".place-button");
-    const info = placeDiv.querySelector(".place-info");
-    btn.addEventListener("click", () => {
-      info.classList.toggle("hidden");
-    });
-
-    placesContainer.appendChild(placeDiv);
-  });
-
+  document.getElementById("districtView").classList.add("hidden");
   document.getElementById("details").classList.remove("hidden");
   document.getElementById("details").scrollIntoView({ behavior: 'smooth' });
 }
