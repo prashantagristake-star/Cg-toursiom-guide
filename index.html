@@ -370,13 +370,6 @@ footer p { font-size: 14px; }
 
   <div class="details hidden" id="details" aria-live="polite">
     <button class="back" type="button" onclick="closeDetails()">← सभी जिलों पर वापस जाएँ</button>
-    function openDistrict(d) {
-  const districtName = d[1]; // जिले का हिंदी नाम
-  
-  document.getElementById("districtTitle").textContent = districtName;
- const introText = districtHeaderInfo[districtName] || ${districtName} जिले के प्रमुख पर्यटन स्थलों की जानकारी नीचे दी गई है।;
-  document.getElementById("districtIntro").textContent = introText;
-
     <h3 id="districtTitle"></h3>
     <p id="districtIntro"></p>
     <h4>घूमने की जगहें</h4>
