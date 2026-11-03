@@ -356,6 +356,19 @@ footer p { font-size: 14px; }
 </main>
 
 <footer>
+  <div class="official-credit">
+  <h3>🌟 प्रेरणा एवं आभार</h3>
+  <p>
+    यह स्वतंत्र पर्यटन गाइड वेबसाइट छत्तीसगढ़ सरकार के आधिकारिक पर्यटन पोर्टल 
+    <a href="https://tourism.cgstate.gov.in/" target="_blank" rel="noopener noreferrer">
+      tourism.cgstate.gov.in
+    </a> से प्रेरित है।
+  </p>
+  <p class="credit-note">
+    ⚠️ <strong>नोट:</strong> यह छत्तीसगढ़ शासन की आधिकारिक वेबसाइट नहीं है, बल्कि 'Growth With Prashant' द्वारा युवाओं और पर्यटकों की सहायता के लिए बनाई गई एक स्वतंत्र डिजिटल पहल है।
+  </p>
+  </div>
+  
   <strong>🌿 CG Tourism Guide</strong>
   <p>अपने छत्तीसगढ़ को जानें, घूमें और उसकी प्रकृति को बचाएँ।</p>
   <p>यह स्वतंत्र पर्यटन जानकारी परियोजना है, सरकारी वेबसाइट नहीं।</p>
@@ -779,6 +792,47 @@ function openCategory(categoryName) {
   messageEl.textContent = `"${categoryName}" श्रेणी के सभी जिलों के स्थान नीचे दिए गए हैं।`;
   setTimeout(() => { messageEl.textContent = ""; }, 4000);
 }
+  .official-credit {
+  background: #edf7ef;
+  padding: 22px;
+  margin: 25px auto;
+  max-width: 800px;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid #c9e2cf;
+}
+
+.official-credit h3 {
+  color: #17633e;
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.official-credit p {
+  color: #335344;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.official-credit a {
+  display: inline-block;
+  margin: 8px 0;
+  color: #087b45;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.official-credit a:hover {
+  text-decoration: underline;
+}
+
+.credit-note {
+  font-size: 12px;
+  color: #666;
+  margin-top: 10px;
+}
+  
 </script>
 </body>
 </html>
