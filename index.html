@@ -580,7 +580,8 @@ Object.keys(divisionData).forEach(divisionName => {
     });
   });
 });
-  const divisionGrid = document.getElementById("divisionGrid");
+
+const divisionGrid = document.getElementById("divisionGrid");
 function renderDivisions() {
   divisionGrid.innerHTML = "";
   Object.keys(divisionData).forEach(divName => {
@@ -671,6 +672,16 @@ function openDistrict(district) {
         <p style="margin: 4px 0;"><strong>5) पहचान:</strong> ${place.keyFeature}</p>
       </div>
     `;
+
+    const btn = placeDiv.querySelector(".place-button");
+    const info = placeDiv.querySelector(".place-info");
+    btn.addEventListener("click", () => {
+      info.classList.toggle("hidden");
+    });
+
+    placesContainer.appendChild(placeDiv);
+  });
+
   document.getElementById("districtView").classList.add("hidden");
   document.getElementById("details").classList.remove("hidden");
   document.getElementById("details").scrollIntoView({ behavior: 'smooth' });
