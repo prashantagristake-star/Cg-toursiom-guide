@@ -406,7 +406,7 @@ footer p { font-size: 14px; }
   }
 })();
 function openCategory(catName) {
-  // 1. संभाग और सर्च बॉक्स को छिपाएँ ताकि केवल फ़िल्टर किए गए परिणाम दिखें
+  // 1. संभाग और सर्च बॉक्स को छिपाएं
   const divWrapper = document.getElementById("divisionsWrapper");
   const districtGrid = document.getElementById("districtGrid");
   const searchBox = document.getElementById("search");
@@ -415,7 +415,7 @@ function openCategory(catName) {
   if (districtGrid) districtGrid.style.display = "none";
   if (searchBox) searchBox.style.display = "none";
 
-  // 2. डिटेल्स बॉक्स को सामने लाएँ
+  // 2. डिटेल्स बॉक्स को सामने लाएं
   const detailsBox = document.getElementById("details");
   detailsBox.classList.remove("hidden");
 
@@ -426,11 +426,10 @@ function openCategory(catName) {
   const placesBox = document.getElementById("places");
   placesBox.innerHTML = "";
 
-  // 4. सभी जिलों के अंदर से उस कैटेगरी की जगहों को ढूँढें
+  // 4. सभी जिलों के अंदर से उस कैटेगरी की जगहों को ढूंढें
   let foundPlaces = [];
   districts.forEach(district => {
     district.places.forEach(place => {
-      // यहाँ हम चेक कर रहे हैं कि जगह की कैटेगरी बटन के नाम से मैच हो रही है या नहीं
       if (place.category === catName) {
         foundPlaces.push({
           ...place,
@@ -438,6 +437,53 @@ function openCategory(catName) {
         });
       }
     });
+  });
+
+  // 5. अगर उस कैटेगरी में कोई जगह न मिले
+  if (foundPlaces.length === 0) {
+    placesBox.innerHTML = `<p style="color:#666; padding:10px;">इस श्रेणी में अभी डेटा अपडेट किया जा रहा है।</p>`;
+    detailsBox.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  // 6. मिली हुई जगहों को 5-पॉइंट फॉर्मेट में रेंडर करें
+  foundPlaces.forEach((place, index) => {
+    const row = document.createElement("div");
+    row.className = "place";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "place-button";
+    button.textContent = `${index + 1}. ${place.name} (${place.districtName} जिला)`;
+
+    const info = document.createElement("div");
+    info.className = "place-info hidden";
+
+    function addInfo(label, value) {
+      const p = document.createElement("p");
+      p.style.margin = "4px 0";
+      p.innerHTML = `<strong>${label}: </strong><span>${value || "जानकारी जल्द जोड़ी जाएगी।"}</span>`;
+      info.appendChild(p);
+    }
+
+    // 5-बिंदु फॉर्मेट
+    addInfo("1) प्रकार", place.type);
+    addInfo("2) महत्व", place.importance);
+    addInfo("3) समय", place.bestTime);
+    addInfo("4) आयोजन", place.events);
+    addInfo("5) पहचान", place.keyFeature);
+
+    button.addEventListener("click", () => {
+      info.classList.toggle("hidden");
+    });
+
+    row.append(button, info);
+    placesBox.appendChild(row);
+  });
+
+  detailsBox.scrollIntoView({ behavior: "smooth" });
+}
+  
   });
 
   // 5. अगर उस कैटेगरी में कोई जगह न मिले
