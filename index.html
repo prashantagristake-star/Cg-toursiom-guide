@@ -291,7 +291,7 @@ footer p { font-size: 14px; }
   <h2 class="section-title">छत्तीसगढ़ को करीब से जानें</h2>
   <p class="subtitle">भारत के इस खूबसूरत राज्य की प्राकृतिक सुंदरता, इतिहास और संस्कृति की खोज करें।</p>
 
- <div class="feature-grid">
+ <div class="feature-grid" id="divisionsWrapper">
   <button class="feature" onclick="openCategory('प्राकृतिक')">
     <span>🏞️</span>
     <h3>प्राकृतिक स्थल</h3>
@@ -318,8 +318,6 @@ footer p { font-size: 14px; }
     <p>ट्रेकिंग और साहसिक गतिविधियाँ</p>
   </button>
 </div>
-
-<div id="categoryMessage" style="margin-top: 15px; font-weight: bold; color: #17633e; text-align: center;"></div>
 
   <div class="callout">
     <h3>इस वेबसाइट का उद्देश्य 💚</h3>
@@ -405,8 +403,6 @@ footer p { font-size: 14px; }
     banner.style.display = "flex";
   }
 })();
-    return;
-  }
 
 function openCategory(catName) {
   // 1. संभाग और सर्च बॉक्स को छिपाएं
@@ -487,45 +483,6 @@ function openCategory(catName) {
   detailsBox.scrollIntoView({ behavior: "smooth" });
 }
   
-  // 6. मिली हुई जगहों को वैसे ही 5-पॉइंट फॉर्मेट में रेंडर करें जैसे जिले के अंदर दिखती हैं
-  foundPlaces.forEach((place, index) => {
-    const row = document.createElement("div");
-    row.className = "place";
-
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "place-button";
-    button.textContent = `${index + 1}. ${place.name} (${place.districtName} जिला)`;
-
-    const info = document.createElement("div");
-    info.className = "place-info hidden";
-
-    function addInfo(label, value) {
-      const p = document.createElement("p");
-      p.style.margin = "4px 0";
-      p.innerHTML = `<strong>${label}: </strong><span>${value || "जानकारी जल्द जोड़ी जाएगी।"}</span>`;
-      info.appendChild(p);
-    }
-
-    // आपके तय किए गए 5 बिंदु
-    addInfo("1) प्रकार", place.type);
-    addInfo("2) महत्व", place.importance);
-    addInfo("3) समय", place.bestTime);
-    addInfo("4) आयोजन", place.events);
-    addInfo("5) पहचान", place.keyFeature);
-
-    button.addEventListener("click", () => {
-      info.classList.toggle("hidden");
-    });
-
-    row.append(button, info);
-    placesBox.appendChild(row);
-  });
-
-  // 7. स्क्रीन को ऊपर से नीचे डिटेल्स की तरफ स्मूथ स्क्रॉल करें
-  detailsBox.scrollIntoView({ behavior: "smooth" });
-}
-  
 const divisionData = {
   "रायपुर संभाग": {
     emoji: "🏛️",
@@ -555,193 +512,4 @@ const divisionData = {
       { name: "बिलासपुर", emoji: "🏛️", intro: "गठन: 1861 (मूल जिला)। वर्तमान स्थिति: न्यायधानी बिलासपुर, रतनपुर महामाया शक्तिपीठ और तालागांव के रुद्र शिव के कारण धार्मिक व पुरातात्विक पर्यटन का प्रमुख गढ़ है।", places: ["रतनपुर महामाया मंदिर", "कानन पेंडारी प्राणी उद्यान", "देवरानी-जेठानी मंदिर और रुद्र शिव (तालागांव)", "पुरातात्विक नगरी मल्हार (मां डिडनेश्वरी मंदिर)"] },
       { name: "रायगढ़", emoji: "🏛️", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: सिंघनपुर के पाषाणकालीन शैलचित्रों और सांस्कृतिक आयोजनों के कारण यह इतिहास प्रेमियों के लिए विशेष महत्व रखता है।", places: ["राम झरना", "सिंघनपुर शैलचित्र क्षेत्र", "कमला नेहरू पार्क", "मदनपुरगढ़"] },
       { name: "जांजगीर-चांपा", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: शिवरीनारायण संगम और ऐतिहासिक मंदिरों की नगरी के रूप में यह धार्मिक पर्यटन का बहुत बड़ा केंद्र है।", places: ["विष्णु मंदिर, जांजगीर", "शिवरीनारायण मंदिर", "लक्ष्मणेश्वर मंदिर, खरौद"] },
-      { name: "कोरबा", emoji: "💧", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: 'सतरेंगा' बैकवॉटर और हसदेव बांगो बांध के विकास से यह छत्तीसगढ़ में वाटर टूरिज्म का सबसे बड़ा हॉटस्पॉट बन गया है।", places: ["सतरेंगा", "बुका जलाशय क्षेत्र", "केंदई जलप्रपात", "हसदेव बांगो बांध", "पाली का प्राचीन शिव मंदिर"] },
-      { name: "मुंगेली", emoji: "🐅", intro: "गठन: 2012 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अचानकमार टाइगर रिजर्व और मदकू द्वीप के चलते यह वन्यजीव प्रेमियों और शोधकर्ताओं के लिए आकर्षण का केंद्र है।", places: ["अचानकमार टाइगर रिजर्व क्षेत्र", "मदकू द्वीप", "सेतगंगा"] },
-      { name: "गौरेला-पेंड्रा-मरवाही", emoji: "🌲", intro: "गठन: 2020 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अरपा नदी के उद्गम सोनमुड़ा और पहाड़ी ठंडी आबोहवा के कारण यह हिल स्टेशन के रूप में तेजी से विकसित हो रहा है।", places: ["अरपा नदी का उद्गम (सोनमुड़ा)", "कबीर चबूतरा", "अचानकमार क्षेत्र की प्राकृतिक सुंदरता"] },
-      { name: "सक्ती", emoji: "🌊", intro: "गठन: 2022 (मातृ जिला: जांजगीर-चांपा)। वर्तमान स्थिति: दमाऊ धारा जलप्रपात और गुंजी के प्राचीन ऋषभ तीर्थ शिलालेखों के कारण यह पर्यटन मानचित्र पर उभर रहा है।", places: ["दमाऊ धारा क्षेत्र", "तुरी धाम", "गुंजी (ऋषभ तीर्थ)"] },
-      { name: "सारंगढ़-बिलाईगढ़", emoji: "🌾", intro: "गठन: 2022 (मातृ जिला: रायगढ़/बलौदाबाजार)। वर्तमान स्थिति: गोमर्डा वन्यजीव अभयारण्य और चंद्रहासिनी देवी मंदिर के माध्यम से वन्यजीव व धार्मिक पर्यटन को बढ़ावा मिल रहा है।", places: ["गोमर्डा वन्यजीव अभयारण्य क्षेत्र", "सारंगढ़ पैलेस", "चंद्रहासिनी देवी मंदिर (चंद्रपुर)"] }
-    ]
-  },
-  "सरगुजा संभाग": {
-    emoji: "⛰️",
-    districts: [
-      { name: "सरगुजा", emoji: "⛰️", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: 'छत्तीसगढ़ का शिमला' कहे जाने वाले मैनपाट और विश्व की प्राचीनतम नाट्यशाला रामगढ़ गुफाओं के कारण यह पर्यटन का सिरमौर है।", places: ["मैनपाट", "रामगढ़ की पहाड़ियाँ एवं गुफाएँ", "ठिनठिनी पत्थर", "सीता बेंगरा व जोगीमारा गुफा"] },
-      { name: "कोरिया", emoji: "🌳", intro: "गठन: 1998 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: अमृतधारा जलप्रपात और अकुरी नाला जैसे प्राकृतिक स्थलों के कारण यह प्रकृति प्रेमियों को खूब लुभाता है।", places: ["अमृतधारा जलप्रपात", "अकुरी नाला", "रामदहा जलप्रपात"] },
-      { name: "सूरजपुर", emoji: "💧", intro: "गठन: 2012 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: कुदरगढ़ मंदिर और रकसगंडा जलप्रपात यहाँ धार्मिक व साहसिक पर्यटन को बढ़ावा दे रहे हैं।", places: ["कुदरगढ़ मंदिर", "रकसगंडा जलप्रपात क्षेत्र", "तमोर पिंगला अभयारण्य"] },
-      { name: "बलरामपुर-रामानुजगंज", emoji: "🌳", intro: "गठन: 2012 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: तातापानी के प्राकृतिक गर्म जलस्रोत और डीपाडीह पुरातात्विक धरोहर के रूप में यह अद्वितीय पर्यटन केंद्र है।", places: ["तातापानी गर्म जलस्रोत", "सेमरसोत अभयारण्य", "डीपाडीह पुरातात्विक स्थल"] },
-      { name: "जशपुर", emoji: "⛰️", intro: "गठन: 1998 (मातृ जिला: रायगढ़)। वर्तमान स्थिति: अपने पाट प्रदेश, रानीदाह जलप्रपात और कैलाश गुफा के साथ यह एडवेंचर और नेचर टूरिज्म का केंद्र है।", places: ["रानीदाह जलप्रपात", "देशदेखा क्षेत्र", "कैलाश गुफा क्षेत्र", "बादलखोल अभयारण्य"] },
-      { name: "मनेन्द्रगढ़-चिरमिरी-भरतपुर", emoji: "🌲", intro: "गठन: 2022 (मातृ जिला: कोरिया)। वर्तमान स्थिति: 28 करोड़ वर्ष पुराने मरीन फॉसिल पार्क और चिरमिरी की पहाड़ियों के कारण यह जिओ-टूरिज्म का प्रमुख स्थल बन गया है।", places: ["मनेन्द्रगढ़ गोंडवाना मरीन फॉसिल पार्क", "चिरमिरी के पहाड़ी दृश्य", "सिद्ध बाबा मंदिर"] }
-    ]
-  },
-  "बस्तर संभाग": {
-    emoji: "🌳",
-    districts: [
-      { name: "बस्तर", emoji: "💧", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: 'भारत का निआग्रा' चित्रकोट जलप्रपात, तीरथगढ़ और विश्व प्रसिद्ध बस्तर दशहरा के कारण यह वैश्विक पर्यटन का केंद्र है।", places: ["चित्रकोट जलप्रपात", "तीरथगढ़ जलप्रपात", "कांगेर घाटी राष्ट्रीय उद्यान", "बस्तर की जनजातीय संस्कृति", "कुटुमसर एवं डंडक गुफाएँ", "दलपत सागर"] },
-      { name: "दंतेवाड़ा", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: बस्तर)। वर्तमान स्थिति: माँ दंतेश्वरी शक्तिपीठ और बारसूर के ऐतिहासिक मंदिरों के साथ यह आस्था और इतिहास का संगम है।", places: ["दंतेश्वरी मंदिर", "बैलाडीला की पहाड़ियाँ", "बारसूर (बत्तीसा मंदिर, मामा-भांजा मंदिर)"] },
-      { name: "उत्तर बस्तर कांकेर", emoji: "🌳", intro: "गठन: 1998 (मातृ जिला: बस्तर)। वर्तमान स्थिति: ऐतिहासिक गड़िया पहाड़ और मलाझकुडुम जलप्रपात के साथ यह ट्रैकिंग व प्राकृतिक पर्यटन के लिए जाना जाता है।", places: ["कांकेर की पहाड़ियाँ", "गड़िया पहाड़", "मलाझकुडुम जलप्रपात", "कांकेर पैलेस"] },
-      { name: "नारायणपुर", emoji: "🎭", intro: "गठन: 2007 (मातृ जिला: बस्तर)। वर्तमान स्थिति: अबूझमाड़ के अछूते जंगलों और अद्वितीय हस्तशिल्प संस्कृति के कारण यह एथनो-टूरिज्म का केंद्र है।", places: ["अबूझमाड़ क्षेत्र", "काकड़ी जलप्रपात", "नारायणपुर हस्तशिल्प बाजार"] },
-      { name: "बीजापुर", emoji: "🌲", intro: "गठन: 2007 (मातृ जिला: दंतेवाड़ा)। वर्तमान स्थिति: इंद्रावती राष्ट्रीय उद्यान और जैव विविधता के कारण वन्यजीव पर्यटन की अपार संभावनाओं से जुड़ा है।", places: ["इंद्रावती राष्ट्रीय उद्यान क्षेत्र", "भैरमगढ़ अभयारण्य", "पामेड़ अभयारण्य", "लंका जलप्रपात", "भद्रकाली मंदिर"] },
-      { name: "कोंडागांव", emoji: "🧶", intro: "गठन: 2012 (मातृ जिला: बस्तर)। वर्तमान स्थिति: 'शिल्प नगरी' के रूप में ढोकरा मेटल क्राफ्ट और केसकाल घाटी के सर्पिराव मार्ग पर्यटकों को आकर्षित करते हैं।", places: ["बेल मेटल और हस्तशिल्प केंद्र", "केसकाल घाटी", "गढ़धनोरा पुरातात्विक स्थल"] },
-      { name: "सुकमा", emoji: "🌳", intro: "गठन: 2012 (मातृ जिला: दंतेवाड़ा)। वर्तमान स्थिति: शबरी नदी के तटीय सौंदर्य और दुधमा जलप्रपात के साथ प्राकृतिक सुंदरता का अनूठा खजाना समेटे हुए है।", places: ["शबरी नदी क्षेत्र", "दुधमा जलप्रपात", "तुंगल बांध", "चित्तलूर"] }
-    ]
-  }
-};
-
-const customDetailsMap = {
-  "चित्रकोट जलप्रपात": { category: "प्राकृतिक", whyVisit: "भारत के सबसे चौड़े (लगभग 300 मीटर) जलप्रपात और 'भारत का निआग्रा' के रूप में विहंगम दृश्य देखने के लिए।", bestMonth: "जुलाई से अक्टूबर (मानसून के दौरान विकराल रूप) तथा नवंबर से फरवरी (बोटिंग के लिए)।", specialEvent: "चित्रकोट महोत्सव और स्थानीय जनजातीय बाजार।", story: "इंद्रावती नदी पर घोड़े की नाल जैसी चट्टानी बनावट से गिरने वाला विश्वप्रसिद्ध झरना।" },
-  "तीरथगढ़ जलप्रपात": { category: "प्राकृतिक", whyVisit: "300 फीट की ऊँचाई से सीढ़ीनुमा चट्टानों पर गिरते झरने के मनमोहक दृश्यों के लिए।", bestMonth: "अगस्त से फरवरी।", specialEvent: "प्रकृति पर्यटन एवं ट्रैकिंग आयोजन।", story: "मुनगा बहार नदी पर सीढ़ियों जैसी चट्टानी संरचना पर बहता सुंदर प्राकृतिक जलप्रपात।" },
-  "कांगेर घाटी राष्ट्रीय उद्यान": { category: "वन्यजीव", whyVisit: "दुर्लभ पहाड़ी मैना, घने वनों और कुटुंबसर चूना-पत्थर की गुफाओं की खोज के लिए।", bestMonth: "नवंबर से जून।", specialEvent: "इको-टूरिज्म और गाइड ट्रैकिंग।", story: "अद्वितीय जैव विविधता और प्राकृतिक भूमिगत गुफाओं के लिए विख्यात राष्ट्रीय उद्यान।" },
-  "बस्तर की जनजातीय संस्कृति": { category: "संस्कृति", whyVisit: "स्थानीय ढोकरा हस्तकला, काष्ठ कला, लोकनृत्य और जीवनशैली को समझने के लिए।", bestMonth: "अक्टूबर से मार्च।", specialEvent: "75 दिनों तक चलने वाला ऐतिहासिक 'बस्तर दशहरा'।", story: "बस्तर की अनोखी लोक परंपराओं और कला संस्कृति की वैश्विक पहचान।" },
-  "मैनपाट": { category: "प्राकृतिक", whyVisit: "इसे 'छत्तीसगढ़ का शिमला' कहा जाता है; यहाँ तिब्बती कैंप, उल्टा पानी और जलप्रपात मुख्य आकर्षण हैं।", bestMonth: "अक्टूबर से मार्च (ठंड के मौसम में विशेष आनंद)।", specialEvent: "मैनपाट महोत्सव।", story: "पहाड़ियों पर बसा सुंदर पठारी क्षेत्र जहाँ तिब्बती संस्कृति और अद्भुत प्राकृतिक नजारे मिलते हैं।" },
-  "भोरमदेव मंदिर": { category: "धरोहर", whyVisit: "11वीं सदी के फणिनागवंश कालीन खजुराहो शैली के मंदिर की वास्तुकला और नक्काशी देखने के लिए।", bestMonth: "अक्टूबर से मार्च।", specialEvent: "वार्षिक 3-दिवसीय भोरमदेव महोत्सव (मार्च माह)।", story: "नक्काशीदार पत्थरों से निर्मित मंदिर जिसे 'छत्तीसगढ़ का खजुराहो' कहा जाता है।" },
-  "सतरेंगा": { category: "प्राकृतिक", whyVisit: "हसदेव नदी के बैकवाटर और बोटिंग का आनंद लेने के लिए।", bestMonth: "अक्टूबर से मार्च।", specialEvent: "जल महोत्सव व पर्यटन गतिविधियाँ।", story: "छत्तीसगढ़ के गोवा के रूप में विकसित पानी से घिरा बेहद खूबसूरत पर्यटन स्थल।" },
-  "तातापानी गर्म जलस्रोत": { category: "प्राकृतिक", whyVisit: "प्राकृतिक गंधकयुक्त गर्म जलकुंड और शिव प्रतिमा के दर्शन हेतु।", bestMonth: "अक्टूबर से फरवरी (ठंड के दिनों में स्नान व दर्शन का आनंद)।", specialEvent: "मकर संक्रांति पर 3-दिवसीय तातापानी महोत्सव।", story: "सदा बहने वाले प्राकृतिक गर्म जलकुंडों के रहस्यों के लिए प्रसिद्ध स्थान।" },
-  "गंगरेल बांध": { category: "प्राकृतिक", whyVisit: "महानदी पर बने विशाल बांध, वाटर स्पोर्ट्स और रिसॉर्ट्स का आनंद लेने के लिए।", bestMonth: "अक्टूबर से मार्च।", specialEvent: "गंगरेल माता महोत्सव व जल खेल उत्सव।", story: "पंडित रविशंकर शुक्ल जलाशय के नाम से प्रसिद्ध छत्तीसगढ़ का सबसे बड़ा बाँध।" }
-};
-
-const districts = [];
-Object.keys(divisionData).forEach(divisionName => {
-  divisionData[divisionName].districts.forEach(d => {
-    const places = d.places.map(placeName => {
-      const extra = customDetailsMap[placeName] || {};
-      return {
-        name: placeName,
-        location: d.name + " जिला",
-        category: extra.category || "दर्शनीय स्थल",
-        whyVisit: extra.whyVisit || "इस स्थान की खासियत, स्थानीय पहचान और पर्यटन का अनुभव लेने के लिए।",
-        bestMonth: extra.bestMonth || "अक्टूबर से मार्च घूमने के लिए सबसे उपयुक्त समय है।",
-        specialEvent: extra.specialEvent || "स्थानीय पर्वों और मेलों के अवसर पर विशेष आयोजन होते हैं।",
-        story: extra.story || "अपनी विशिष्ट सुंदरता और सांस्कृतिक धरोहर के लिए क्षेत्र में प्रसिद्ध।"
-      };
-    });
-
-    districts.push({
-      englishName: d.name,
-      name: d.name,
-      emoji: d.emoji,
-      division: divisionName,
-      intro: d.intro,
-      places: places
-    });
-  });
-});
-
-const divisionGrid = document.getElementById("divisionGrid");
-function renderDivisions() {
-  divisionGrid.innerHTML = "";
-  Object.keys(divisionData).forEach(divName => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "division-card";
-    card.innerHTML = `
-      <span style="font-size: 32px;">${divisionData[divName].emoji}</span>
-      <h3 style="margin: 10px 0 5px; color: #163c32;">${divName}</h3>
-      <p style="font-size: 13px; color: #617268; margin: 0;">क्लिक करके जिले देखें</p>
-    `;
-    card.addEventListener("click", () => openDivision(divName));
-    divisionGrid.appendChild(card);
-  });
-}
-renderDivisions();
-
-let currentSelectedDivision = "";
-
-function openDivision(divName) {
-  currentSelectedDivision = divName;
-  document.getElementById("divisionView").classList.add("hidden");
-  document.getElementById("districtView").classList.remove("hidden");
-  document.getElementById("selectedDivisionTitle").textContent = `📂 ${divName} के अंतर्गत आने वाले जिले`;
-  document.getElementById("sectionSubtitle").textContent = `${divName} के किसी भी जिले पर क्लिक करके उसकी पर्यटन गाइड देखें।`;
-  renderDistrictList(divName, "");
-}
-
-function showDivisions() {
-  document.getElementById("districtView").classList.add("hidden");
-  document.getElementById("details").classList.add("hidden");
-  document.getElementById("divisionView").classList.remove("hidden");
-  document.getElementById("sectionSubtitle").textContent = "पहले अपना संभाग चुनें, फिर उस संभाग के जिले दिखाई देंगे।";
-}
-
-function showDistrictsBack() {
-  document.getElementById("details").classList.add("hidden");
-  document.getElementById("districtView").classList.remove("hidden");
-}
-
-function renderDistrictList(divName, query) {
-  const grid = document.getElementById("districtGrid");
-  grid.innerHTML = "";
-  
-  const filtered = districts.filter(d => d.division === divName && (query === "" || d.name.toLowerCase().includes(query)));
-
-  if (filtered.length === 0) {
-    grid.textContent = "इस नाम से कोई जिला नहीं मिला।";
-    return;
-  }
-
-  filtered.forEach(district => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "district-card";
-    button.innerHTML = `
-      <span class="emoji">${district.emoji}</span>
-      <strong>${district.name} जिला</strong>
-      <small>पर्यटन गाइड देखें →</small>
-    `;
-    button.addEventListener("click", () => openDistrict(district));
-    grid.appendChild(button);
-  });
-}
-
-document.getElementById("search").addEventListener("input", function() {
-  const query = this.value.trim().toLowerCase();
-  renderDistrictList(currentSelectedDivision, query);
-});
-
-function openDistrict(district) {
-  document.getElementById("districtTitle").textContent = district.emoji + " " + district.name + " जिला";
-  document.getElementById("districtIntro").textContent = district.intro;
-
-  const placesContainer = document.getElementById("places");
-  placesContainer.innerHTML = "";
-
-  district.places.forEach((place, index) => {
-    const placeDiv = document.createElement("div");
-    placeDiv.className = "place";
-    placeDiv.innerHTML = `
-      <button type="button" class="place-button">${index + 1}. ${place.name}</button>
-      <div class="place-info hidden">
-        <p style="margin: 4px 0;"><strong>1) परिचय:</strong> ${place.story}</p>
-        <p style="margin: 4px 0;"><strong>2) प्रकार:</strong> ${place.category}</p>
-        <p style="margin: 4px 0;"><strong>3) महत्व (क्यों जाएँ):</strong> ${place.whyVisit}</p>
-        <p style="margin: 4px 0;"><strong>4) सर्वोत्तम समय:</strong> ${place.bestMonth}</p>
-        <p style="margin: 4px 0;"><strong>5) विशेष घटना:</strong> ${place.specialEvent}</p>
-        <p style="margin: 4px 0;"><strong>6) कहानी/विशेषता:</strong> ${place.story}</p>
-      </div>
-    `;
-
-    const btn = placeDiv.querySelector(".place-button");
-    const info = placeDiv.querySelector(".place-info");
-    btn.addEventListener("click", () => {
-      info.classList.toggle("hidden");
-    });
-
-    placesContainer.appendChild(placeDiv);
-  });
-
-  document.getElementById("districtView").classList.add("hidden");
-  document.getElementById("details").classList.remove("hidden");
-  document.getElementById("details").scrollIntoView({ behavior: 'smooth' });
-}
-
-function go(sectionId) {
-  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-}
-
-function openCategory(categoryName) {
-  document.getElementById("districts").scrollIntoView({ behavior: 'smooth' });
-  const messageEl = document.getElementById("categoryMessage");
-  messageEl.textContent = `"${categoryName}" श्रेणी के पर्यटन स्थलों की खोज के लिए पहले अपना संभाग चुनें।`;
-}
-</script>
-</body>
-</html>
+      { name: "कोरबा", emoji: "💧", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: 'सतरेंगा' बैकवॉटर और हसदेव बांगो बांध के विकास से यह छत्तीसगढ़ में वाटर टूरिज्म का सबसे बड़ा हॉटस्पॉट बन गया है।", places: ["सतरेंगा", "बुका जलाशय क्षेत्र", "केंदई जलप्रपात", "हसदेव बांगो बांध", "पाली का प्राची
