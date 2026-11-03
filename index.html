@@ -373,15 +373,10 @@ footer p { font-size: 14px; }
     function openDistrict(d) {
   const districtName = d[1]; // जिले का हिंदी नाम
   
-  // 1. यहाँ जिले का नाम दिखेगा
   document.getElementById("districtTitle").textContent = districtName;
-
-  // 👇 2. इस लाइन को यहाँ ठीक इसके नीचे पेस्ट कर दें:
-  const introText = districtHeaderInfo[districtName] || ${districtName} जिले के प्रमुख पर्यटन स्थलों की जानकारी नीचे दी गई है।;
+ const introText = districtHeaderInfo[districtName] || ${districtName} जिले के प्रमुख पर्यटन स्थलों की जानकारी नीचे दी गई है।;
   document.getElementById("districtIntro").textContent = introText;
 
-  // (इसके आगे आपके पर्यटन स्थलों की सूची को लोड करने वाला बाकी का कोड होगा)
-}
     <h3 id="districtTitle"></h3>
     <p id="districtIntro"></p>
     <h4>घूमने की जगहें</h4>
