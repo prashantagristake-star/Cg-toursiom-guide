@@ -225,6 +225,63 @@ section { padding: 55px 5%; scroll-margin-top: 70px; }
   padding: 8px 15px;
   margin-bottom: 16px;
 }
+
+/* COMMENT SECTION STYLES */
+#community-section {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 16px;
+  color: #163c32;
+  border: 1px solid #dce7d0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+#community-section h2 { margin-top: 0; color: #163c32; }
+#community-section input,
+#community-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #c8d5c7;
+  border-radius: 10px;
+  font-size: 15px;
+  outline-color: #397859;
+}
+#community-section textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+#community-section button#sendComment {
+  background: #163c32;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+#community-section button#sendComment:hover {
+  background: #27634b;
+}
+#community-section button#sendComment:disabled {
+  background: #7a928b;
+  cursor: not-allowed;
+}
+.comment-item {
+  background: #f4f8f5;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+  border-left: 4px solid #163c32;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+.comment-item strong { color: #163c32; font-size: 15px; }
+.comment-item p { margin: 6px 0 0; color: #333; font-size: 14px; }
+
 footer {
   background: #163c32;
   color: #e8f0e8;
@@ -268,6 +325,7 @@ footer p { font-size: 14px; }
     <button type="button" onclick="go('home')">Home</button>
     <button type="button" onclick="go('about')">हमारे बारे में</button>
     <button type="button" onclick="go('districts')">संभाग व जिले</button>
+    <button type="button" onclick="go('community-section')">कमेंट</button>
   </nav>
 </header>
 
@@ -358,6 +416,34 @@ footer p { font-size: 14px; }
     </p>
   </div>
 </section>
+
+<!-- CG TOURISM GUIDE COMMENT SECTION -->
+<section id="community-section">
+  <h2>💬 अपना अनुभव साझा करें</h2>
+  <p>छत्तीसगढ़ घूमने का आपका अनुभव कैसा रहा? हमें बताइए।</p>
+
+  <div class="comment-box">
+    <input
+      id="commentName"
+      type="text"
+      placeholder="अपना नाम लिखें"
+      maxlength="40"
+    >
+
+    <textarea
+      id="commentText"
+      placeholder="अपना कमेंट लिखें..."
+      maxlength="500"
+    ></textarea>
+
+    <button id="sendComment" type="button">कमेंट पोस्ट करें</button>
+  </div>
+
+  <h3 style="margin-top: 25px;">Visitor Comments</h3>
+  <div id="commentsList">कमेंट लोड हो रहे हैं...</div>
+</section>
+<!-- END COMMENT SECTION -->
+
 </main>
 
 <footer>
@@ -391,6 +477,11 @@ footer p { font-size: 14px; }
   </div>
 </footer>
 
+<!-- FIREBASE SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
 <script>
 (function showFoundationDayBanner() {
   const today = new Date();
@@ -405,25 +496,21 @@ footer p { font-size: 14px; }
 })();
 
 function openCategory(catName) {
-  // 1. संभाग, जिला ग्रिड और सर्च बॉक्स को छिपाएं
   const divisionView = document.getElementById("divisionView");
   const districtView = document.getElementById("districtView");
   
   if (divisionView) divisionView.classList.add("hidden");
   if (districtView) districtView.classList.add("hidden");
 
-  // 2. डिटेल्स बॉक्स को सामने लाएं
   const detailsBox = document.getElementById("details");
   detailsBox.classList.remove("hidden");
 
-  // 3. हेडिंग सेट करें
   document.getElementById("districtTitle").textContent = `श्रेणी: ${catName} स्थल`;
   document.getElementById("districtIntro").textContent = `छत्तीसगढ़ के सभी जिलों से '${catName}' श्रेणी के अंतर्गत आने वाले प्रमुख पर्यटन स्थल:`;
 
   const placesBox = document.getElementById("places");
   placesBox.innerHTML = "";
 
-  // 4. सभी जिलों के अंदर से उस कैटेगरी की जगहों को ढूंढें
   let foundPlaces = [];
   districts.forEach(district => {
     district.places.forEach(place => {
@@ -436,14 +523,12 @@ function openCategory(catName) {
     });
   });
 
-  // 5. अगर उस कैटेगरी में कोई जगह न मिले
   if (foundPlaces.length === 0) {
     placesBox.innerHTML = `<p style="color:#666; padding:10px;">इस श्रेणी में अभी डेटा अपडेट किया जा रहा है।</p>`;
     detailsBox.scrollIntoView({ behavior: "smooth" });
     return;
   }
 
-  // 6. मिली हुई जगहों को 5-पॉइंट फॉर्मेट में रेंडर करें
   foundPlaces.forEach((place, index) => {
     const row = document.createElement("div");
     row.className = "place";
@@ -463,7 +548,6 @@ function openCategory(catName) {
       info.appendChild(p);
     }
 
-    // 5-बिंदु फॉर्मेट
     addInfo("1) प्रकार", place.category);
     addInfo("2) महत्व", place.importance);
     addInfo("3) समय", place.bestTime);
@@ -687,6 +771,100 @@ function openDistrict(district) {
   document.getElementById("details").scrollIntoView({ behavior: 'smooth' });
 }
 
+function go(sectionId) {
+  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+/* FIREBASE CONFIG & COMMENT SECTION LOGIC */
+const firebaseConfig = {
+  apiKey: "अपनी_API_KEY",
+  authDomain: "अपना_PROJECT.firebaseapp.com",
+  databaseURL: "अपना_DATABASE_URL",
+  projectId: "अपना_PROJECT_ID",
+  storageBucket: "अपना_PROJECT.appspot.com",
+  messagingSenderId: "अपना_SENDER_ID",
+  appId: "अपना_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+firebase.auth().signInAnonymously()
+.then(() => {
+  // 1. COMMENT POST LOGIC
+  const sendBtn = document.getElementById("sendComment");
+  sendBtn.onclick = async () => {
+    const nameInput = document.getElementById("commentName");
+    const textInput = document.getElementById("commentText");
+    
+    const name = nameInput.value.trim();
+    const message = textInput.value.trim();
+
+    if (!name || !message) {
+      alert("कृपया नाम और कमेंट दोनों लिखें।");
+      return;
+    }
+
+    if (name.length > 40 || message.length > 500) {
+      alert("कमेंट की सीमा से अधिक टेक्स्ट है।");
+      return;
+    }
+
+    try {
+      sendBtn.disabled = true;
+      sendBtn.textContent = "पोस्ट हो रहा है...";
+
+      await db.ref("comments").push({
+        name: name,
+        message: message,
+        time: firebase.database.ServerValue.TIMESTAMP
+      });
+
+      nameInput.value = "";
+      textInput.value = "";
+      alert("आपका कमेंट पोस्ट हो गया!");
+
+    } catch (error) {
+      alert("कमेंट पोस्ट नहीं हुआ। कृपया दोबारा कोशिश करें।");
+      console.error(error);
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = "कमेंट पोस्ट करें";
+    }
+  };
+
+  // 2. SHOW COMMENTS LOGIC
+  db.ref("comments").limitToLast(50).on("value", snapshot => {
+    const list = document.getElementById("commentsList");
+    list.innerHTML = "";
+
+    if (!snapshot.exists()) {
+      list.innerHTML = "<p>अभी तक कोई कमेंट नहीं है। अपना अनुभव साझा करने वाले पहले व्यक्ति बनें!</p>";
+      return;
+    }
+
+    snapshot.forEach(item => {
+      const data = item.val();
+
+      const card = document.createElement("div");
+      card.className = "comment-item";
+
+      const author = document.createElement("strong");
+      author.textContent = data.name || "Visitor";
+
+      const message = document.createElement("p");
+      message.textContent = data.message || "";
+
+      card.append(author, message);
+      list.prepend(card);
+    });
+  });
+
+})
+.catch(error => {
+  console.error("Firebase Error:", error);
+  document.getElementById("commentsList").textContent = "कमेंट लोड नहीं हो सके।";
+});
 </script>
 </body>
 </html>
