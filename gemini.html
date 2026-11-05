@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#163c32">
+<meta name="description" content="CG Tourism Guide - छत्तीसगढ़ के 33 जिलों के पर्यटन स्थलों की जानकारी।">
+<title>CG Tourism Guide | चलो छत्तीसगढ़ घूमते हैं</title>
+
+<style>
+.official-credit {
+  background: #edf7ef;
+  padding: 22px;
+  margin: 25px 0;
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid #c9e2cf;
+}
+.official-credit h3 { color: #17633e; }
+.official-credit a {
+  display: inline-block;
+  margin: 12px 0;
+  color: #087b45;
+  font-weight: bold;
+  text-decoration: none;
+}
+.credit-note { font-size: 12px; color: #666; margin-top: 12px; }
+.feature {
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+.feature:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px #0002;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+  background: #f5f7f0;
+  color: #20352b;
+  line-height: 1.7;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.cg-fest-banner {
+  display: none;
+  background: linear-gradient(135deg, #102f28, #27634b);
+  color: #fff;
+  text-align: center;
+  padding: 14px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  position: relative;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border-bottom: 3px solid #d8e9ad;
+}
+.cg-fest-banner span { color: #d8e9ad; font-size: 17px; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #163c32;
+  color: white;
+  padding: 12px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.logo { font-size: 19px; font-weight: bold; }
+nav { display: flex; gap: 8px; flex-wrap: wrap; }
+nav button {
+  background: transparent;
+  color: white;
+  border: 1px solid #739184;
+  border-radius: 20px;
+  padding: 6px 12px;
+}
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 35px 20px;
+  color: white;
+  background:
+    radial-gradient(ellipse at 75% 15%, #b5cb81 0, transparent 32%),
+    linear-gradient(145deg, #102f28, #27634b 60%, #71915c);
+}
+.hero-content { max-width: 750px; }
+.tag { color: #e1edb8; letter-spacing: 2px; font-size: 13px; }
+h1 { font-size: clamp(36px, 8vw, 64px); line-height: 1.2; margin: 18px 0; }
+.hero p { font-size: 18px; color: #e5efe8; }
+.vision-quote {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  padding: 15px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(216, 233, 173, 0.4);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #f1f8e9;
+  text-align: left;
+}
+.vision-quote strong { color: #d8e9ad; }
+
+.btn {
+  border: 0;
+  border-radius: 30px;
+  padding: 12px 22px;
+  font-weight: bold;
+  background: #d8e9ad;
+  color: #183d30;
+  margin: 7px;
+}
+.btn-outline { background: transparent; border: 1px solid white; color: white; }
+
+section { padding: 55px 5%; scroll-margin-top: 70px; }
+.section-title {
+  text-align: center;
+  font-size: clamp(25px, 5vw, 36px);
+  margin: 0 0 10px;
+}
+.subtitle {
+  text-align: center;
+  color: #64776b;
+  margin: 0 auto 28px;
+  max-width: 650px;
+}
+.about { background: #fff; }
+.feature-grid, .division-grid, .district-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 14px;
+}
+.feature, .division-card { background: #f0f5e9; border-radius: 16px; padding: 20px; text-align: center; border: 1px solid #dce7d0; cursor: pointer; }
+.feature:hover, .division-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px #0002;
+}
+.callout {
+  max-width: 750px;
+  margin: 28px auto 0;
+  background: #eaf1df;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+}
+.district-section { background: #edf2e7; }
+.search {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  padding: 14px 17px;
+  border: 1px solid #c8d5c7;
+  border-radius: 12px;
+  background: white;
+  outline-color: #397859;
+}
+.district-card {
+  background: white;
+  border: 1px solid #e0e8dd;
+  border-radius: 15px;
+  padding: 17px;
+  text-align: left;
+  color: #20352b;
+  box-shadow: 0 3px 10px #1c42200a;
+  transition: transform .2s;
+  cursor: pointer;
+}
+.district-card:hover { transform: translateY(-3px); }
+.district-card .emoji { font-size: 28px; }
+.district-card strong { display: block; font-size: 16px; }
+.district-card small { color: #68786d; }
+
+.details {
+  max-width: 800px;
+  margin: 28px auto 0;
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 5px 20px #173b2910;
+}
+.details h3 { font-size: 25px; margin: 0; }
+.place { padding: 13px 0; border-bottom: 1px solid #e4eae1; }
+.place:last-child { border: 0; }
+.place-button {
+  width: 100%;
+  text-align: left;
+  background: #f1f5e9;
+  color: #20352b;
+  border: 1px solid #dce7d0;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+.place-info {
+  background: #fbfcf8;
+  border-left: 4px solid #397859;
+  padding: 12px;
+  margin: 8px 0 14px;
+  border-radius: 6px;
+}
+.hidden { display: none !important; }
+.back {
+  border: 1px solid #b9c9b8;
+  background: white;
+  border-radius: 25px;
+  padding: 8px 15px;
+  margin-bottom: 16px;
+}
+
+/* COMMENT SECTION STYLES */
+#community-section {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 16px;
+  color: #163c32;
+  border: 1px solid #dce7d0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+#community-section h2 { margin-top: 0; color: #163c32; }
+#community-section input,
+#community-section textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #c8d5c7;
+  border-radius: 10px;
+  font-size: 15px;
+  outline-color: #397859;
+}
+#community-section textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+#community-section button#sendComment {
+  background: #163c32;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+#community-section button#sendComment:hover {
+  background: #27634b;
+}
+#community-section button#sendComment:disabled {
+  background: #7a928b;
+  cursor: not-allowed;
+}
+.comment-item {
+  background: #f4f8f5;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+  border-left: 4px solid #163c32;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+.comment-item strong { color: #163c32; font-size: 15px; }
+.comment-item p { margin: 6px 0 0; color: #333; font-size: 14px; }
+
+footer {
+  background: #163c32;
+  color: #e8f0e8;
+  text-align: center;
+  padding: 28px 15px;
+}
+footer p { font-size: 14px; }
+.footer-links {
+  margin: 15px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: #d8e9ad;
+  text-decoration: none;
+  font-weight: bold;
+}
+.visitor-counter {
+  text-align: center;
+  padding: 12px;
+  background: #102f28;
+  color: white;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+.visitor-counter p { margin: 0 0 5px; font-size: 14px; }
+</style>
+</head>
+
+<body>
+<div id="cgFestBanner" class="cg-fest-banner" role="status" aria-live="polite">
+  <span>🌾 छत्तीसगढ़ महतारी की जय!</span>
+  <span id="cgAnniversary"></span>
+</div>
+
+<header>
+  <div class="logo">🌿 CG Tourism Guide</div>
+  <nav aria-label="मुख्य नेविगेशन">
+    <button type="button" onclick="go('home')">Home</button>
+    <button type="button" onclick="go('about')">हमारे बारे में</button>
+    <button type="button" onclick="go('districts')">संभाग व जिले</button>
+    <button type="button" onclick="go('community-section')">कमेंट</button>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="tag">EXPLORE CHHATTISGARH</div>
+    <h1>चलो छत्तीसगढ़<br>घूमते हैं! 🌿</h1>
+    
+    <div class="vision-quote">
+      <strong>🚀 Growth With Prashant Vision:</strong><br>
+      "हमारा उद्देश्य स्थानीय कला, संस्कृति और पर्यटन स्थलों को वैश्विक पहचान दिलाना तथा युवाओं को डिजिटल माध्यम से जोड़कर छत्तीसगढ़ में नए अवसर पैदा करना है। आइए, मिलकर अपने सुंदर प्रदेश को जानें!"
+    </div>
+
+    <button class="btn" type="button" onclick="go('about')">🚪 चलो, सफर शुरू करें</button>
+    <button class="btn btn-outline" type="button" onclick="go('districts')">संभाग चुनें ↓</button>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2 class="section-title">छत्तीसगढ़ को करीब से जानें</h2>
+  <p class="subtitle">भारत के इस खूबसूरत राज्य की प्राकृतिक सुंदरता, इतिहास और संस्कृति की खोज करें।</p>
+
+ <div class="feature-grid" id="divisionsWrapper">
+  <button class="feature" onclick="openCategory('प्राकृतिक')">
+    <span>🏞️</span>
+    <h3>प्राकृतिक स्थल</h3>
+    <p>झरने, पहाड़ और जंगल</p>
+  </button>
+  <button class="feature" onclick="openCategory('धरोहर')">
+    <span>🏛️</span>
+    <h3>धरोहर एवं विरासत</h3>
+    <p>मंदिर और ऐतिहासिक स्थल</p>
+  </button>
+  <button class="feature" onclick="openCategory('वन्यजीव')">
+    <span>🐅</span>
+    <h3>वन्यजीव</h3>
+    <p>अभयारण्य और जैव विविधता</p>
+  </button>
+  <button class="feature" onclick="openCategory('संस्कृति')">
+    <span>🎭</span>
+    <h3>संस्कृति एवं परंपरा</h3>
+    <p>जनजातियाँ, कला, मेले और त्योहार</p>
+  </button>
+  <button class="feature" onclick="openCategory('साहसिक')">
+    <span>🚵</span>
+    <h3>साहसिक पर्यटन</h3>
+    <p>ट्रेकिंग और साहसिक गतिविधियाँ</p>
+  </button>
+</div>
+
+  <div class="callout">
+    <h3>इस वेबसाइट का उद्देश्य 💚</h3>
+    <p>छत्तीसगढ़ के पर्यटन स्थलों की जानकारी लोगों तक पहुँचाना, स्थानीय संस्कृति को बढ़ावा देना और प्रकृति के प्रति जिम्मेदारी बढ़ाना।</p>
+    <button class="btn" type="button" onclick="go('districts')">🚪 अब अपना संभाग चुनें</button>
+  </div>
+</section>
+
+<section class="district-section" id="districts">
+  <h2 class="section-title">संभाग और जिले चुनें 🗺️</h2>
+  <p class="subtitle" id="sectionSubtitle">पहले अपना संभाग चुनें, फिर उस संभाग के जिले दिखाई देंगे।</p>
+
+  <div id="divisionView">
+    <h3 style="text-align: center; color: #163c32; margin-bottom: 20px;">👇 अपना संभाग चयन करें</h3>
+    <div class="division-grid" id="divisionGrid"></div>
+  </div>
+
+  <div id="districtView" class="hidden">
+    <button class="back" type="button" onclick="showDivisions()">← सभी संभागों पर वापस जाएँ</button>
+    <h3 id="selectedDivisionTitle" style="text-align: center; color: #163c32; margin-bottom: 15px;"></h3>
+    <input class="search" id="search" type="search" placeholder="🔎 इस संभाग में जिला खोजें..." aria-label="जिला खोजें">
+    <div class="district-grid" id="districtGrid"></div>
+  </div>
+
+  <div class="details hidden" id="details" aria-live="polite">
+    <button class="back" type="button" onclick="showDistrictsBack()">← जिलों की सूची पर वापस जाएँ</button>
+    <h3 id="districtTitle"></h3>
+    
+    <div style="background: #edf7ef; border-left: 4px solid #163c32; padding: 14px 18px; margin: 15px 0; border-radius: 8px;">
+      <p id="districtIntro" style="margin: 0; font-weight: 500; color: #163c32; line-height: 1.6;"></p>
+    </div>
+
+    <h4>घूमने की जगहें (पर्यटन स्थल)</h4>
+    <div id="places"></div>
+
+    <p style="font-size:13px; color:#68786d; margin-top:15px;">
+      यात्रा से पहले स्थान, पहुँच, खुलने का समय और प्रवेश नियमों की स्थानीय या आधिकारिक स्रोत से पुष्टि करें।
+    </p>
+  </div>
+</section>
+
+<!-- CG TOURISM GUIDE COMMENT SECTION -->
+<section id="community-section">
+  <h2>💬 अपना अनुभव साझा करें</h2>
+  <p>छत्तीसगढ़ घूमने का आपका अनुभव कैसा रहा? हमें बताइए।</p>
+
+  <div class="comment-box">
+    <input
+      id="commentName"
+      type="text"
+      placeholder="अपना नाम लिखें"
+      maxlength="40"
+    >
+
+    <textarea
+      id="commentText"
+      placeholder="अपना कमेंट लिखें..."
+      maxlength="500"
+    ></textarea>
+
+    <button id="sendComment" type="button">कमेंट पोस्ट करें</button>
+  </div>
+
+  <h3 style="margin-top: 25px;">Visitor Comments</h3>
+  <div id="commentsList">कमेंट लोड हो रहे हैं...</div>
+</section>
+<!-- END COMMENT SECTION -->
+
+</main>
+
+<footer>
+  <strong>🌿 CG Tourism Guide</strong>
+  <p>अपने छत्तीसगढ़ को जानें, घूमें और उसकी प्रकृति को बचाएँ।</p>
+  
+  <div class="official-credit">
+    <h3>🌿 हमारी प्रेरणा और जानकारी का स्रोत</h3>
+    <p>छत्तीसगढ़ की खूबसूरती को लोगों तक पहुँचाने का यह प्रयास छत्तीसगढ़ पर्यटन विभाग की आधिकारिक वेबसाइट से प्रेरित है।</p>
+    <a href="https://tourism.cgstate.gov.in/themes/religious" target="_blank" rel="noopener noreferrer">आधिकारिक वेबसाइट देखें 🌐</a>
+  </div>
+
+  <div class="footer-links">
+    <a href="https://youtube.com/@growthwithprashant26m" target="_blank" rel="noopener noreferrer">▶️ YouTube (Growth With Prashant)</a>
+    <a href="https://www.instagram.com/growt.hwithprashant/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+  </div>
+
+  <p style="font-size:13px;color:#a3c1b1;margin-top:10px;">
+    Design &amp; Managed by <strong>Growth With Prashant</strong> 🚀
+  </p>
+
+  <div class="visitor-counter">
+    <p>👀 इस वेबसाइट पर कुल विजिटर्स की संख्या:</p>
+    <div id="sfcrrn4h56zwwq5g25j69t71z44nbdsz31y"></div>
+    <script src="https://counter6.optistats.ovh/private/counter.js?c=rrn4h56zwwq5g25j69t71z44nbdsz31y&amp;down=async" async></script>
+    <noscript>
+      <a href="https://www.freecounterstat.com" title="Free visitor counter">
+        <img src="https://counter6.optistats.ovh/private/freecounterstat.php?c=rrn4h56zwwq5g25j69t71z44nbdsz31y" alt="Visitor counter" loading="lazy">
+      </a>
+    </noscript>
+  </div>
+</footer>
+
+<!-- FIREBASE SCRIPTS -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+(function showFoundationDayBanner() {
+  const today = new Date();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+  if (month === 11 && date >= 1 && date <= 7) {
+    const banner = document.getElementById("cgFestBanner");
+    const years = today.getFullYear() - 2000;
+    document.getElementById("cgAnniversary").textContent = `छत्तीसगढ़ राज्य स्थापना के गौरवशाली ${years} वर्ष पूर्ण होने पर समस्त प्रदेशवासियों को हार्दिक बधाई एवं शुभकामनाएँ! 🌿`;
+    banner.style.display = "flex";
+  }
+})();
+
+function openCategory(catName) {
+  const divisionView = document.getElementById("divisionView");
+  const districtView = document.getElementById("districtView");
+  
+  if (divisionView) divisionView.classList.add("hidden");
+  if (districtView) districtView.classList.add("hidden");
+
+  const detailsBox = document.getElementById("details");
+  detailsBox.classList.remove("hidden");
+
+  document.getElementById("districtTitle").textContent = `श्रेणी: ${catName} स्थल`;
+  document.getElementById("districtIntro").textContent = `छत्तीसगढ़ के सभी जिलों से '${catName}' श्रेणी के अंतर्गत आने वाले प्रमुख पर्यटन स्थल:`;
+
+  const placesBox = document.getElementById("places");
+  placesBox.innerHTML = "";
+
+  let foundPlaces = [];
+  districts.forEach(district => {
+    district.places.forEach(place => {
+      if (place.category === catName) {
+        foundPlaces.push({
+          ...place,
+          districtName: district.name
+        });
+      }
+    });
+  });
+
+  if (foundPlaces.length === 0) {
+    placesBox.innerHTML = `<p style="color:#666; padding:10px;">इस श्रेणी में अभी डेटा अपडेट किया जा रहा है।</p>`;
+    detailsBox.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+
+  foundPlaces.forEach((place, index) => {
+    const row = document.createElement("div");
+    row.className = "place";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "place-button";
+    button.textContent = `${index + 1}. ${place.name} (${place.districtName} जिला)`;
+
+    const info = document.createElement("div");
+    info.className = "place-info hidden";
+
+    function addInfo(label, value) {
+      const p = document.createElement("p");
+      p.style.margin = "4px 0";
+      p.innerHTML = `<strong>${label}: </strong><span>${value || "जानकारी जल्द जोड़ी जाएगी।"}</span>`;
+      info.appendChild(p);
+    }
+
+    addInfo("1) प्रकार", place.category);
+    addInfo("2) महत्व", place.importance);
+    addInfo("3) समय", place.bestTime);
+    addInfo("4) आयोजन", place.events);
+    addInfo("5) पहचान", place.keyFeature);
+
+    button.addEventListener("click", () => {
+      info.classList.toggle("hidden");
+    });
+
+    row.append(button, info);
+    placesBox.appendChild(row);
+  });
+
+  detailsBox.scrollIntoView({ behavior: "smooth" });
+}
+  
+const divisionData = {
+  "रायपुर संभाग": {
+    emoji: "🏛️",
+    districts: [
+      { name: "रायपुर", emoji: "🏙️", intro: "गठन: 1861 (मूल जिला)। वर्तमान स्थिति: राज्य की राजधानी होने के नाते यहाँ पुरखौती मुक्तांगन, नंदनवन जंगल सफारी, विवेकानंद सरोवर और चंद्रखुरी स्थित माता कौशल्या मंदिर पर्यटकों के प्रमुख आकर्षण केंद्र हैं।", places: ["पुरखौती मुक्तांगन", "नंदनवन जंगल सफारी", "विवेकानंद सरोवर", "माता कौशल्या मंदिर (चंद्रखुरी)", "आरंग (भांडदेउ जैन मंदिर)"] },
+      { name: "धमतरी", emoji: "🌊", intro: "गठन: 1998 (मातृ जिला: रायपुर)। वर्तमान स्थिति: महानदी के उद्गम स्थल सिहावा पर्वत और गंगरेल बांध के कारण यह जल पर्यटन व पिकनिक का प्रमुख केंद्र बन चुका है।", places: ["गंगरेल बांध", "सिहावा क्षेत्र", "रुद्री जलाशय क्षेत्र", "अंगारमोती मंदिर"] },
+      { name: "महासमुंद", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: रायपुर)। वर्तमान स्थिति: ऐतिहासिक पुरातात्विक नगरी सिरपुर और खल्लारी माता मंदिर के कारण यहाँ ऐतिहासिक व सांस्कृतिक पर्यटन तेजी से बढ़ रहा है।", places: ["सिरपुर पुरातात्विक स्थल", "लक्ष्मण मंदिर, सिरपुर", "खल्लारी माता मंदिर", "भीमखोज"] },
+      { name: "बलौदाबाजार-भाटापारा", emoji: "🏞️", intro: "गठन: 2012 (मातृ जिला: रायपुर)। वर्तमान स्थिति: सतनाम पंथ के महान तीर्थ गिरौदपुरी धाम और बारनवापारा वन्यजीव अभयारण्य के रूप में यह धार्मिक व इको-टूरिज्म का बड़ा केंद्र है।", places: ["बारनवापारा वन्यजीव अभयारण्य", "गिरौदपुरी धाम", "दामाखेड़ा"] },
+      { name: "गरियाबंद", emoji: "💧", intro: "गठन: 2012 (मातृ जिला: रायपुर)। वर्तमान स्थिति: भूतेश्वरनाथ स्वयंभू शिवलिंग, जतमई-घटारानी जलप्रपात और राजिम मेले के कारण यह आध्यात्मिक व प्राकृतिक पर्यटकों की पहली पसंद है।", places: ["जतमई जलप्रपात", "घटारानी जलप्रपात", "भूतेश्वरनाथ मंदिर", "राजीव लोचन मंदिर (राजिम)"] }
+    ]
+  },
+  "दुर्ग संभाग": {
+    emoji: "🏙️",
+    districts: [
+      { name: "दुर्ग", emoji: "🏙️", intro: "गठन: 1906 (मातृ जिला: रायपुर)। वर्तमान स्थिति: भिलाई स्टील प्लांट और मैत्री बाग के साथ-साथ प्राचीन देवबलोदा शिव मंदिर यहाँ औद्योगिक व धार्मिक पर्यटन का सुंदर मेल पेश करता है।", places: ["मैत्री बाग, भिलाई", "देवबलोदा का प्राचीन शिव मंदिर", "नगपुरा पार्श्वनाथ जैन मंदिर", "धमधा का किला (धमधा गढ़)"] },
+      { name: "राजनांदगांव", emoji: "🌿", intro: "गठन: 1973 (मातृ जिला: दुर्ग)। वर्तमान स्थिति: डोंगरगढ़ की माँ बमलेश्वरी देवी और प्रज्ञागिरि के कारण यह पूरे राज्य में आध्यात्मिक और धार्मिक पर्यटन का मुख्य केंद्र है।", places: ["मां बम्लेश्वरी मंदिर, डोंगरगढ़", "प्रज्ञागिरि, डोंगरगढ़", "माँ पाताल भैरवी मंदिर (बर्फानी धाम)"] },
+      { name: "कबीरधाम", emoji: "🌿", intro: "गठन: 1998 (मातृ जिला: राजनांदगांव/बिलासपुर)। वर्तमान स्थिति: 'छत्तीसगढ़ के खजुराहो' के रूप में प्रसिद्ध भोरमदेव मंदिर और चिल्फी घाटी की प्राकृतिक वादियाँ पर्यटकों को आकर्षित करती हैं।", places: ["भोरमदेव मंदिर", "मड़वा महल", "छेरकी महल", "चिल्फी घाटी"] },
+      { name: "बालोद", emoji: "🌾", intro: "गठन: 2012 (मातृ जिला: दुर्ग)। वर्तमान स्थिति: तांदुला जलाशय और सियादेवी जलप्रपात के विकास से यह क्षेत्र इको-टूरिज्म और वाटर स्पोर्ट्स के रूप में उभर रहा है।", places: ["सियादेवी मंदिर एवं जलप्रपात", "तांदुला जलाशय", "गंगा मैया मंदिर (झलमला)"] },
+      { name: "बेमेतरा", emoji: "🌿", intro: "गठन: 2012 (मातृ जिला: दुर्ग)। वर्तमान स्थिति: देवकर और देवरबीजा के प्राचीन मंदिरों के माध्यम से यह धार्मिक पर्यटन और स्थानीय इतिहास का महत्वपूर्ण केंद्र है।", places: ["देवकर का प्राचीन मंदिर क्षेत्र", "भद्रकाली मंदिर (साझा)", "सीता देवी मंदिर (देवरबीजा)"] },
+      { name: "खैरागढ़-छुईखदान-गंडई", emoji: "🎨", intro: "गठन: 2022 (मातृ जिला: राजनांदगांव)। वर्तमान स्थिति: एशिया के प्रथम इंदिरा कला संगीत विश्वविद्यालय के कारण यह कला, संगीत और सांस्कृतिक शिक्षा का वैश्विक केंद्र है।", places: ["इंदिरा कला संगीत विश्वविद्यालय", "घटियारी का शिव मंदिर (गंडई)", "छुईखदान महल"] },
+      { name: "मोहला-मानपुर-अंबागढ़ चौकी", emoji: "🌳", intro: "गठन: 2022 (मातृ जिला: राजनांदगांव)। वर्तमान स्थिति: शिवनाथ नदी तटीय प्राकृतिक क्षेत्रों और मोगरा जलाशय के साथ यह प्राकृतिक और शांत पर्यटन के लिए विकसित हो रहा है।", places: ["अंबागढ़ चौकी किला व पहाड़ी क्षेत्र", "शिवनाथ नदी तटीय प्राकृतिक क्षेत्र", "मोगरा जलाशय"] }
+    ]
+  },
+  "बिलासपुर संभाग": {
+    emoji: "🏛️",
+    districts: [
+      { name: "बिलासपुर", emoji: "🏛️", intro: "गठन: 1861 (मूल जिला)। वर्तमान स्थिति: न्यायधानी बिलासपुर, रतनपुर महामाया शक्तिपीठ और तालागांव के रुद्र शिव के कारण धार्मिक व पुरातात्विक पर्यटन का प्रमुख गढ़ है।", places: ["रतनपुर महामाया मंदिर", "कानन पेंडारी प्राणी उद्यान", "देवरानी-जेठानी मंदिर और रुद्र शिव (तालागांव)", "पुरातात्विक नगरी मल्हार (मां डिडनेश्वरी मंदिर)"] },
+      { name: "रायगढ़", emoji: "🏛️", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: सिंघनपुर के पाषाणकालीन शैलचित्रों और सांस्कृतिक आयोजनों के कारण यह इतिहास प्रेमियों के लिए विशेष महत्व रखता है।", places: ["राम झरना", "सिंघनपुर शैलचित्र क्षेत्र", "कमला नेहरू पार्क", "मदनपुरगढ़"] },
+      { name: "जांजगीर-चांपा", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: शिवरीनारायण संगम और ऐतिहासिक मंदिरों की नगरी के रूप में यह धार्मिक पर्यटन का बहुत बड़ा केंद्र है।", places: ["विष्णु मंदिर, जांजगीर", "शिवरीनारायण मंदिर", "लक्ष्मणेश्वर मंदिर, खरौद"] },
+      { name: "कोरबा", emoji: "💧", intro: "गठन: 1998 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: 'सतरेंगा' बैकवॉटर और हसदेव बांगो बांध के विकास से यह छत्तीसगढ़ में वाटर टूरिज्म का सबसे बड़ा हॉटस्पॉट बन गया है।", places: ["सतरेंगा", "बुका जलाशय क्षेत्र", "केंदई जलप्रपात", "हसदेव बांगो बांध", "पाली का प्राचीन शिव मंदिर"] },
+      { name: "मुंगेली", emoji: "🐅", intro: "गठन: 2012 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अचानकमार टाइगर रिजर्व और मदकू द्वीप के चलते यह वन्यजीव प्रेमियों और शोधकर्ताओं के लिए आकर्षण का केंद्र है।", places: ["अचानकमार टाइगर रिजर्व क्षेत्र", "मदकू द्वीप", "सेतगंगा"] },
+      { name: "गौरेला-पेंड्रा-मरवाही", emoji: "🌲", intro: "गठन: 2020 (मातृ जिला: बिलासपुर)। वर्तमान स्थिति: अरपा नदी के उद्गम सोनमुड़ा और पहाड़ी ठंडी आबोहवा के कारण यह हिल स्टेशन के रूप में तेजी से विकसित हो रहा है।", places: ["अरपा नदी का उद्गम (सोनमुड़ा)", "कबीर चबूतरा", "अचानकमार क्षेत्र की प्राकृतिक सुंदरता"] },
+      { name: "सक्ती", emoji: "🌊", intro: "गठन: 2022 (मातृ जिला: जांजगीर-चांपा)। वर्तमान स्थिति: दमाऊ धारा जलप्रपात और गुंजी के प्राचीन ऋषभ तीर्थ शिलालेखों के कारण यह पर्यटन मानचित्र पर उभर रहा है।", places: ["दमाऊ धारा क्षेत्र", "तुरी धाम", "गुंजी (ऋषभ तीर्थ)"] },
+      { name: "सारंगढ़-बिलाईगढ़", emoji: "🌾", intro: "गठन: 2022 (मातृ जिला: रायगढ़/बलौदाबाजार)। वर्तमान स्थिति: गोमर्डा वन्यजीव अभयारण्य और चंद्रहासिनी देवी मंदिर के माध्यम से वन्यजीव व धार्मिक पर्यटन को बढ़ावा मिल रहा है।", places: ["गोमर्डा वन्यजीव अभयारण्य क्षेत्र", "सारंगढ़ पैलेस", "चंद्रहासिनी देवी मंदिर (चंद्रपुर)"] }
+    ]
+  },
+  "सरगुजा संभाग": {
+    emoji: "⛰️",
+    districts: [
+      { name: "सरगुजा", emoji: "⛰️", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: 'छत्तीसगढ़ का शिमला' कहे जाने वाले मैनपाट और विश्व की प्राचीनतम नाट्यशाला रामगढ़ गुफाओं के कारण यह पर्यटन का सिरमौर है।", places: ["मैनपाट", "रामगढ़ की पहाड़ियाँ एवं गुफाएँ", "ठिनठिनी पत्थर", "सीता बेंगरा व जोगीमारा गुफा"] },
+      { name: "कोरिया", emoji: "🌳", intro: "गठन: 1998 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: अमृतधारा जलप्रपात और अकुरी नाला जैसे प्राकृतिक स्थलों के कारण यह प्रकृति प्रेमियों को खूब लुभाता है।", places: ["अमृतधारा जलप्रपात", "अकुरी नाला", "रामदहा जलप्रपात"] },
+      { name: "सूरजपुर", emoji: "💧", intro: "गठन: 2012 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: कुदरगढ़ मंदिर और रकसगंडा जलप्रपात यहाँ धार्मिक व साहसिक पर्यटन को बढ़ावा दे रहे हैं।", places: ["कुदरगढ़ मंदिर", "रकसगंडा जलप्रपात क्षेत्र", "तमोर पिंगला अभयारण्य"] },
+      { name: "बलरामपुर-रामानुजगंज", emoji: "🌳", intro: "गठन: 2012 (मातृ जिला: सरगुजा)। वर्तमान स्थिति: तातापानी के प्राकृतिक गर्म जलस्रोत और डीपाडीह पुरातात्विक धरोहर के रूप में यह अद्वितीय पर्यटन केंद्र है।", places: ["तातापानी गर्म जलस्रोत", "सेमरसोत अभयारण्य", "डीपाडीह पुरातात्विक स्थल"] },
+      { name: "जशपुर", emoji: "⛰️", intro: "गठन: 1998 (मातृ जिला: रायगढ़)। वर्तमान स्थिति: अपने पाट प्रदेश, रानीदाह जलप्रपात और कैलाश गुफा के साथ यह एडवेंचर और नेचर टूरिज्म का केंद्र है।", places: ["रानीदाह जलप्रपात", "देशदेखा क्षेत्र", "कैलाश गुफा क्षेत्र", "बादलखोल अभयारण्य"] },
+      { name: "मनेन्द्रगढ़-चिरमिरी-भरतपुर", emoji: "🌲", intro: "गठन: 2022 (मातृ जिला: कोरिया)। वर्तमान स्थिति: 28 करोड़ वर्ष पुराने मरीन फॉसिल पार्क और चिरमिरी की पहाड़ियों के कारण यह जिओ-टूरिज्म का प्रमुख स्थल बन गया है।", places: ["मनेन्द्रगढ़ गोंडवाना मरीन फॉसिल पार्क", "चिरमिरी के पहाड़ी दृश्य", "सिद्ध बाबा मंदिर"] }
+    ]
+  },
+  "बस्तर संभाग": {
+    emoji: "🌳",
+    districts: [
+      { name: "बस्तर", emoji: "💧", intro: "गठन: 1948 (देशी रियासत)। वर्तमान स्थिति: 'भारत का निआग्रा' चित्रकोट जलप्रपात, तीरथगढ़ और विश्व प्रसिद्ध बस्तर दशहरा के कारण यह वैश्विक पर्यटन का केंद्र है।", places: ["चित्रकोट जलप्रपात", "तीरथगढ़ जलप्रपात", "कांगेर घाटी राष्ट्रीय उद्यान", "बस्तर की जनजातीय संस्कृति", "कुटुमसर एवं डंडक गुफाएँ", "दलपत सागर"] },
+      { name: "दंतेवाड़ा", emoji: "🛕", intro: "गठन: 1998 (मातृ जिला: बस्तर)। वर्तमान स्थिति: माँ दंतेश्वरी शक्तिपीठ और बारसूर के ऐतिहासिक मंदिरों के साथ यह आस्था और इतिहास का संगम है।", places: ["दंतेश्वरी मंदिर", "बैलाडीला की पहाड़ियाँ", "बारसूर (बत्तीसा मंदिर, मामा-भांजा मंदिर)"] },
+      { name: "उत्तर बस्तर कांकेर", emoji: "🌳", intro: "गठन: 1998 (मातृ जिला: बस्तर)। वर्तमान स्थिति: ऐतिहासिक गड़िया पहाड़ और मलाझकुडुम जलप्रपात के साथ यह ट्रैकिंग व प्राकृतिक पर्यटन के लिए जाना जाता है।", places: ["कांकेर की पहाड़ियाँ", "गड़िया पहाड़", "मलाझकुडुम जलप्रपात", "कांकेर पैलेस"] },
+      { name: "नारायणपुर", emoji: "🎭", intro: "गठन: 2007 (मातृ जिला: बस्तर)। वर्तमान स्थिति: अबूझमाड़ के अछूते जंगलों और अद्वितीय हस्तशिल्प संस्कृति के कारण यह एथनो-टूरिज्म का केंद्र है।", places: ["अबूझमाड़ क्षेत्र", "काकड़ी जलप्रपात", "नारायणपुर हस्तशिल्प बाजार"] },
+      { name: "बीजापुर", emoji: "🌲", intro: "गठन: 2007 (मातृ जिला: दंतेवाड़ा)। वर्तमान स्थिति: इंद्रावती राष्ट्रीय उद्यान और जैव विविधता के कारण वन्यजीव पर्यटन की अपार संभावनाओं से जुड़ा है।", places: ["इंद्रावती राष्ट्रीय उद्यान क्षेत्र", "भैरमगढ़ अभयारण्य", "पामेड़ अभयारण्य", "लंका जलप्रपात", "भद्रकाली मंदिर"] },
+      { name: "कोंडागांव", emoji: "🧶", intro: "गठन: 2012 (मातृ जिला: बस्तर)। वर्तमान स्थिति: 'शिल्प नगरी' के रूप में ढोकरा मेटल क्राफ्ट और केसकाल घाटी के सर्पिराव मार्ग पर्यटकों को आकर्षित करते हैं।", places: ["बेल मेटल और हस्तशिल्प केंद्र", "केसकाल घाटी", "गढ़धनोरा पुरातात्विक स्थल"] },
+      { name: "सुकमा", emoji: "🌳", intro: "गठन: 2012 (मातृ जिला: दंतेवाड़ा)। वर्तमान स्थिति: शबरी नदी के तटीय सौंदर्य और दुधमा जलप्रपात के साथ प्राकृतिक सुंदरता का अनूठा खजाना समेटे हुए है।", places: ["शबरी नदी क्षेत्र", "दुधमा जलप्रपात", "तुंगल बांध", "चित्तलूर"] }
+    ]
+  }
+};
+
+const customDetailsMap = {
+  "चित्रकोट जलप्रपात": { category: "प्राकृतिक", importance: "भारत के सबसे चौड़े (लगभग 300 मीटर) जलप्रपात और 'भारत का निआग्रा' के रूप में विहंगम दृश्य देखने के लिए।", bestTime: "जुलाई से अक्टूबर (मानसून के दौरान विकराल रूप) तथा नवंबर से फरवरी (बोटिंग के लिए)।", events: "चित्रकोट महोत्सव और स्थानीय जनजातीय बाजार।", keyFeature: "इंद्रावती नदी पर घोड़े की नाल जैसी चट्टानी बनावट से गिरने वाला विश्वप्रसिद्ध झरना।" },
+  "तीरथगढ़ जलप्रपात": { category: "प्राकृतिक", importance: "300 फीट की ऊँचाई से सीढ़ीनुमा चट्टानों पर गिरते झरने के मनमोहक दृश्यों के लिए।", bestTime: "अगस्त से फरवरी।", events: "प्रकृति पर्यटन एवं ट्रैकिंग आयोजन।", keyFeature: "मुनगा बहार नदी पर सीढ़ियों जैसी चट्टानी संरचना पर बहता सुंदर प्राकृतिक जलप्रपात।" },
+  "कांगेर घाटी राष्ट्रीय उद्यान": { category: "वन्यजीव", importance: "दुर्लभ पहाड़ी मैना, घने वनों और कुटुंबसर चूना-पत्थर की गुफाओं की खोज के लिए।", bestTime: "नवंबर से जून।", events: "इको-टूरिज्म और गाइड ट्रैकिंग।", keyFeature: "अद्वितीय जैव विविधता और प्राकृतिक भूमिगत गुफाओं के लिए विख्यात राष्ट्रीय उद्यान।" },
+  "बस्तर की जनजातीय संस्कृति": { category: "संस्कृति", importance: "स्थानीय ढोकरा हस्तकला, काष्ठ कला, लोकनृत्य और जीवनशैली को समझने के लिए।", bestTime: "अक्टूबर से मार्च।", events: "75 दिनों तक चलने वाला ऐतिहासिक 'बस्तर दशहरा'।", keyFeature: "बस्तर की अनोखी लोक परंपराओं और कला संस्कृति की वैश्विक पहचान।" },
+  "मैनपाट": { category: "प्राकृतिक", importance: "इसे 'छत्तीसगढ़ का शिमला' कहा जाता है; यहाँ तिब्बती कैंप, उल्टा पानी और जलप्रपात मुख्य आकर्षण हैं।", bestTime: "अक्टूबर से मार्च (ठंड के मौसम में विशेष आनंद)।", events: "मैनपाट महोत्सव।", keyFeature: "पहाड़ियों पर बसा सुंदर पठारी क्षेत्र जहाँ तिब्बती संस्कृति और अद्भुत प्राकृतिक नजारे मिलते हैं।" },
+  "भोरमदेव मंदिर": { category: "धरोहर", importance: "11वीं सदी के फणिनागवंश कालीन खजुराहो शैली के मंदिर की वास्तुकला और नक्काशी देखने के लिए।", bestTime: "अक्टूबर से मार्च।", events: "वार्षिक 3-दिवसीय भोरमदेव महोत्सव (मार्च माह)।", keyFeature: "नक्काशीदार पत्थरों से निर्मित मंदिर जिसे 'छत्तीसगढ़ का खजुराहो' कहा जाता है।" },
+  "सतरेंगा": { category: "प्राकृतिक", importance: "हसदेव नदी के बैकवाटर और बोटिंग का आनंद लेने के लिए।", bestTime: "अक्टूबर से मार्च।", events: "जल महोत्सव व पर्यटन गतिविधियाँ।", keyFeature: "छत्तीसगढ़ के गोवा के रूप में विकसित पानी से घिरा बेहद खूबसूरत पर्यटन स्थल।" },
+  "तातापानी गर्म जलस्रोत": { category: "प्राकृतिक", importance: "प्राकृतिक गंधकयुक्त गर्म जलकुंड और शिव प्रतिमा के दर्शन हेतु।", bestTime: "अक्टूबर से फरवरी (ठंड के दिनों में स्नान व दर्शन का आनंद)।", events: "मकर संक्रांति पर 3-दिवसीय तातापानी महोत्सव।", keyFeature: "सदा बहने वाले प्राकृतिक गर्म जलकुंडों के रहस्यों के लिए प्रसिद्ध स्थान।" },
+  "गंगरेल बांध": { category: "प्राकृतिक", importance: "महानदी पर बने विशाल बांध, वाटर स्पोर्ट्स और रिसॉर्ट्स का आनंद लेने के लिए।", bestTime: "अक्टूबर से मार्च।", events: "गंगरेल माता महोत्सव व जल खेल उत्सव।", keyFeature: "पंडित रविशंकर शुक्ल जलाशय के नाम से प्रसिद्ध छत्तीसगढ़ का सबसे बड़ा बाँध।" }
+};
+
+const districts = [];
+Object.keys(divisionData).forEach(divisionName => {
+  divisionData[divisionName].districts.forEach(d => {
+    const places = d.places.map(placeName => {
+      const extra = customDetailsMap[placeName] || {};
+      return {
+        name: placeName,
+        location: d.name + " जिला",
+        category: extra.category || "दर्शनीय स्थल",
+        importance: extra.importance || "इस स्थान की खासियत, स्थानीय पहचान और पर्यटन का अनुभव लेने के लिए।",
+        bestTime: extra.bestTime || "अक्टूबर से मार्च घूमने के लिए सबसे उपयुक्त समय है।",
+        events: extra.events || "स्थानीय पर्वों और मेलों के अवसर पर विशेष आयोजन होते हैं।",
+        keyFeature: extra.keyFeature || "अपनी विशिष्ट सुंदरता और सांस्कृतिक धरोहर के लिए क्षेत्र में प्रसिद्ध।"
+      };
+    });
+
+    districts.push({
+      englishName: d.name,
+      name: d.name,
+      emoji: d.emoji,
+      division: divisionName,
+      intro: d.intro,
+      places: places
+    });
+  });
+});
+
+const divisionGrid = document.getElementById("divisionGrid");
+function renderDivisions() {
+  divisionGrid.innerHTML = "";
+  Object.keys(divisionData).forEach(divName => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "division-card";
+    card.innerHTML = `
+      <span style="font-size: 32px;">${divisionData[divName].emoji}</span>
+      <h3 style="margin: 10px 0 5px; color: #163c32;">${divName}</h3>
+      <p style="font-size: 13px; color: #617268; margin: 0;">क्लिक करके जिले देखें</p>
+    `;
+    card.addEventListener("click", () => openDivision(divName));
+    divisionGrid.appendChild(card);
+  });
+}
+renderDivisions();
+
+let currentSelectedDivision = "";
+
+function openDivision(divName) {
+  currentSelectedDivision = divName;
+  document.getElementById("divisionView").classList.add("hidden");
+  document.getElementById("districtView").classList.remove("hidden");
+  document.getElementById("selectedDivisionTitle").textContent = `📂 ${divName} के अंतर्गत आने वाले जिले`;
+  document.getElementById("sectionSubtitle").textContent = `${divName} के किसी भी जिले पर क्लिक करके उसकी पर्यटन गाइड देखें।`;
+  renderDistrictList(divName, "");
+}
+
+function showDivisions() {
+  document.getElementById("districtView").classList.add("hidden");
+  document.getElementById("details").classList.add("hidden");
+  document.getElementById("divisionView").classList.remove("hidden");
+  document.getElementById("sectionSubtitle").textContent = "पहले अपना संभाग चुनें, फिर उस संभाग के जिले दिखाई देंगे।";
+}
+
+function showDistrictsBack() {
+  document.getElementById("details").classList.add("hidden");
+  document.getElementById("districtView").classList.remove("hidden");
+}
+
+function renderDistrictList(divName, query) {
+  const grid = document.getElementById("districtGrid");
+  grid.innerHTML = "";
+  
+  const filtered = districts.filter(d => d.division === divName && (query === "" || d.name.toLowerCase().includes(query)));
+
+  if (filtered.length === 0) {
+    grid.textContent = "इस नाम से कोई जिला नहीं मिला।";
+    return;
+  }
+
+  filtered.forEach(district => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "district-card";
+    button.innerHTML = `
+      <span class="emoji">${district.emoji}</span>
+      <strong>${district.name} जिला</strong>
+      <small>पर्यटन गाइड देखें →</small>
+    `;
+    button.addEventListener("click", () => openDistrict(district));
+    grid.appendChild(button);
+  });
+}
+
+document.getElementById("search").addEventListener("input", function() {
+  const query = this.value.trim().toLowerCase();
+  renderDistrictList(currentSelectedDivision, query);
+});
+
+function openDistrict(district) {
+  document.getElementById("districtTitle").textContent = district.emoji + " " + district.name + " जिला";
+  document.getElementById("districtIntro").textContent = district.intro;
+
+  const placesContainer = document.getElementById("places");
+  placesContainer.innerHTML = "";
+
+  district.places.forEach((place, index) => {
+    const placeDiv = document.createElement("div");
+    placeDiv.className = "place";
+    placeDiv.innerHTML = `
+      <button type="button" class="place-button">${index + 1}. ${place.name}</button>
+      <div class="place-info hidden">
+        <p style="margin: 4px 0;"><strong>1) प्रकार:</strong> ${place.category}</p>
+        <p style="margin: 4px 0;"><strong>2) महत्व:</strong> ${place.importance}</p>
+        <p style="margin: 4px 0;"><strong>3) समय:</strong> ${place.bestTime}</p>
+        <p style="margin: 4px 0;"><strong>4) आयोजन:</strong> ${place.events}</p>
+        <p style="margin: 4px 0;"><strong>5) पहचान:</strong> ${place.keyFeature}</p>
+      </div>
+    `;
+
+    const btn = placeDiv.querySelector(".place-button");
+    const info = placeDiv.querySelector(".place-info");
+    btn.addEventListener("click", () => {
+      info.classList.toggle("hidden");
+    });
+
+    placesContainer.appendChild(placeDiv);
+  });
+
+  document.getElementById("districtView").classList.add("hidden");
+  document.getElementById("details").classList.remove("hidden");
+  document.getElementById("details").scrollIntoView({ behavior: 'smooth' });
+}
+
+function go(sectionId) {
+  document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+/* FIREBASE CONFIG & COMMENT SECTION LOGIC */
+const firebaseConfig = {
+  apiKey: "अपनी_API_KEY",
+  authDomain: "अपना_PROJECT.firebaseapp.com",
+  databaseURL: "अपना_DATABASE_URL",
+  projectId: "अपना_PROJECT_ID",
+  storageBucket: "अपना_PROJECT.appspot.com",
+  messagingSenderId: "अपना_SENDER_ID",
+  appId: "अपना_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+firebase.auth().signInAnonymously()
+.then(() => {
+  // 1. COMMENT POST LOGIC
+  const sendBtn = document.getElementById("sendComment");
+  sendBtn.onclick = async () => {
+    const nameInput = document.getElementById("commentName");
+    const textInput = document.getElementById("commentText");
+    
+    const name = nameInput.value.trim();
+    const message = textInput.value.trim();
+
+    if (!name || !message) {
+      alert("कृपया नाम और कमेंट दोनों लिखें।");
+      return;
+    }
+
+    if (name.length > 40 || message.length > 500) {
+      alert("कमेंट की सीमा से अधिक टेक्स्ट है।");
+      return;
+    }
+
+    try {
+      sendBtn.disabled = true;
+      sendBtn.textContent = "पोस्ट हो रहा है...";
+
+      await db.ref("comments").push({
+        name: name,
+        message: message,
+        time: firebase.database.ServerValue.TIMESTAMP
+      });
+
+      nameInput.value = "";
+      textInput.value = "";
+      alert("आपका कमेंट पोस्ट हो गया!");
+
+    } catch (error) {
+      alert("कमेंट पोस्ट नहीं हुआ। कृपया दोबारा कोशिश करें।");
+      console.error(error);
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.textContent = "कमेंट पोस्ट करें";
+    }
+  };
+
+  // 2. SHOW COMMENTS LOGIC
+  db.ref("comments").limitToLast(50).on("value", snapshot => {
+    const list = document.getElementById("commentsList");
+    list.innerHTML = "";
+
+    if (!snapshot.exists()) {
+      list.innerHTML = "<p>अभी तक कोई कमेंट नहीं है। अपना अनुभव साझा करने वाले पहले व्यक्ति बनें!</p>";
+      return;
+    }
+
+    snapshot.forEach(item => {
+      const data = item.val();
+
+      const card = document.createElement("div");
+      card.className = "comment-item";
+
+      const author = document.createElement("strong");
+      author.textContent = data.name || "Visitor";
+
+      const message = document.createElement("p");
+      message.textContent = data.message || "";
+
+      card.append(author, message);
+      list.prepend(card);
+    });
+  });
+
+})
+.catch(error => {
+  console.error("Firebase Error:", error);
+  document.getElementById("commentsList").textContent = "कमेंट लोड नहीं हो सके।";
+});
+</script>
+</body>
+</html>
